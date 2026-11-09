@@ -1,0 +1,6 @@
+-- Provision exactly three invited auth users through the local/production admin UI.
+-- Then replace the UUID placeholders and execute as an administrator:
+-- insert into public.group_members(group_id,user_id,member_slot) values
+-- ('00000000-0000-4000-8000-000000000001','<invited-user-1-uuid>',1),
+-- ('00000000-0000-4000-8000-000000000001','<invited-user-2-uuid>',2),
+-- ('00000000-0000-4000-8000-000000000001','<invited-user-3-uuid>',3);

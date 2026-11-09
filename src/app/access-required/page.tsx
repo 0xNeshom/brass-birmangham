@@ -1,0 +1,3 @@
+import {Factory} from 'lucide-react';
+import Link from 'next/link';
+export default function AccessRequired(){return <main id="main" className="loading-page"><Factory color="var(--brass)" size={36}/><p className="eyebrow" style={{marginTop:24}}>An invitation-only league</p><h1>Your place at the table<br/>isn’t registered yet.</h1><p className="muted">Ask your league organizer to add this account to one of the three member slots, then return to the tournament.</p><Link className="button" href="/" prefetch={false}>Check access again</Link><form action="/auth/signout" method="post" style={{marginTop:16}}><button className="button secondary">Sign out</button></form></main>;}
