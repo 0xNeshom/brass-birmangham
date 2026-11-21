@@ -9,7 +9,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: { default: 'Brass Tournament', template: '%s · Brass Tournament' },
-  description: 'A private tournament ledger for three industrialists. Ten matches. One legacy.',
+  description: 'An unlimited-membership Brass league. Four players per match. Ten matches per tournament.',
   robots: { index: false, follow: false }
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

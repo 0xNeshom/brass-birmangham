@@ -15,3 +15,7 @@ enabled = true
 site_url = "http://localhost:3000"
 additional_redirect_urls = ["http://localhost:3000/auth/callback", "http://localhost:3000/auth/confirm", "http://localhost:3000/auth/recovery"]
 enable_signup = false
+
+[auth.hook.before_user_created]
+enabled = true
+uri = "pg-functions://postgres/public/before_user_created"

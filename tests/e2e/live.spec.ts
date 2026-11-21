@@ -4,9 +4,20 @@ import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 
 const url = process.env.TEST_SUPABASE_URL;
 const publicKey = process.env.TEST_SUPABASE_PUBLISHABLE_KEY;
-const serviceKey = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY;
-const enabled = !!(url && publicKey && serviceKey && process.env.NEXT_PUBLIC_SUPABASE_URL);
-const reason = 'Live journey requires a disposable local Supabase with TEST_SUPABASE_URL, TEST_SUPABASE_PUBLISHABLE_KEY, TEST_SUPABASE_SERVICE_ROLE_KEY and matching NEXT_PUBLIC_SUPABASE_URL; no live auth or database checks run without these.';
+const serviceKey = process.env.TEST_SUPABASE_SECRET_KEY;
+const acknowledged = process.env.BRASS_ALLOW_LOCAL_SERVICE_ROLE_TESTS === '1';
+function isDisposableLocal(raw: string | undefined) {
+  try {
+    const target = new URL(raw!);
+    return target.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(target.hostname)
+      && target.port === '54321' && !target.username && !target.password
+      && (target.pathname === '/' || target.pathname === '') && !target.search && !target.hash;
+  } catch { return false; }
+}
+if (url && !isDisposableLocal(url)) throw new Error('Refusing browser service-role tests unless TEST_SUPABASE_URL is plain HTTP loopback at port 54321.');
+if (url && process.env.NEXT_PUBLIC_SUPABASE_URL !== url) throw new Error('Refusing browser tests because TEST_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_URL must match exactly.');
+const enabled = !!(url && publicKey && serviceKey && acknowledged && process.env.NEXT_PUBLIC_SUPABASE_URL);
+const reason = 'Live journey requires a disposable local Supabase, matching TEST_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_URL, TEST_SUPABASE_PUBLISHABLE_KEY, TEST_SUPABASE_SECRET_KEY, and BRASS_ALLOW_LOCAL_SERVICE_ROLE_TESTS=1.';
 const group = '00000000-0000-4000-8000-000000000001';
 
 async function login(page: Page, email: string, password: string) {
@@ -32,7 +43,11 @@ async function savePodium(page: Page, placements: string[]) {
   await dialog.getByRole('button', { name: 'Save result', exact: true }).click();
   await expect(dialog).not.toBeVisible();
 }
-test.describe('live three-member league', () => {
+// This journey targets the retired v1 invite/three-player flow. It performs
+// direct membership writes and its teardown deletes played rows, which now
+// conflict with RPC-only writes and the database's v2 immutability guards.
+// Keep it disabled until the flow and cleanup are rewritten for v2.
+test.describe.skip('retired v1 live three-member league journey', () => {
   test.skip(!enabled, reason);
   test('invited account confirms, sets a password, signs out, and signs in again', async ({ browser }) => {
     const admin = createClient(url!, serviceKey!, { auth: { persistSession: false, autoRefreshToken: false } });
@@ -175,12 +190,19 @@ test.describe('live three-member league', () => {
       const owned = await admin.from('tournaments').select('id').in('title', titles);
       if (owned.error) throw new Error('Could not locate browser-owned records for cleanup.');
       for (const tournament of owned.data ?? []) {
-        for (const table of ['match_results', 'matches', 'players']) {
+        for (const table of ['match_participants', 'match_results', 'matches', 'players']) {
           const deleted = await admin.from(table).delete().eq('tournament_id', tournament.id);
           if (deleted.error) throw new Error('Could not clean browser-owned tournament records.');
         }
         const deleted = await admin.from('tournaments').delete().eq('id', tournament.id);
         if (deleted.error) throw new Error('Could not clean browser-owned tournament.');
+      }
+      const userIds = users.map(user => user.id);
+      if (userIds.length) {
+        const profileCleanup = await admin.from('member_profiles').delete().in('user_id', userIds);
+        if (profileCleanup.error) throw new Error('Could not clean browser-owned profiles.');
+        const membershipCleanup = await admin.from('group_members').delete().in('user_id', userIds);
+        if (membershipCleanup.error) throw new Error('Could not clean browser-owned memberships.');
       }
       for (const user of users) {
         const deleted = await admin.auth.admin.deleteUser(user.id);

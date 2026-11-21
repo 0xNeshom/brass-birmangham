@@ -3,10 +3,11 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const auth = vi.hoisted(() => ({
   exchangeCodeForSession: vi.fn(),
   verifyOtp: vi.fn(),
+  rpc: vi.fn(),
   signOut: vi.fn(),
 }));
 vi.mock('@/lib/supabase/config', () => ({ isConfigured: () => true }));
-vi.mock('@/lib/supabase/server', () => ({ serverClient: async () => ({ auth }) }));
+vi.mock('@/lib/supabase/server', () => ({ serverClient: async () => ({ auth, rpc: auth.rpc }) }));
 import { GET as callback } from '@/app/auth/callback/route';
 import { GET as confirm } from '@/app/auth/confirm/route';
 import { POST as signout } from '@/app/auth/signout/route';
@@ -16,6 +17,7 @@ beforeEach(() => {
   vi.resetAllMocks();
   auth.exchangeCodeForSession.mockResolvedValue({ error: null });
   auth.verifyOtp.mockResolvedValue({ error: null });
+  auth.rpc.mockResolvedValue({ error: null });
   auth.signOut.mockResolvedValue({ error: null });
 });
 
@@ -42,8 +44,21 @@ describe('authentication callbacks', () => {
     expect(auth.verifyOtp).toHaveBeenCalledWith({ token_hash: 'private-hash', type });
     expect(response.headers.get('location')).toBe('https://league.test/auth/password');
   });
+  it('activates an approved membership only after signup email verification', async () => {
+    const response = await confirm(new Request('https://league.test/auth/confirm?token_hash=private-hash&type=signup&next=/dashboard'));
+    expect(auth.verifyOtp).toHaveBeenCalledWith({ token_hash: 'private-hash', type: 'signup' });
+    expect(auth.rpc).toHaveBeenCalledWith('activate_verified_membership');
+    expect(response.headers.get('location')).toBe('https://league.test/dashboard');
+  });
+  it('signs out a verified but unapproved user when database activation fails', async () => {
+    auth.rpc.mockResolvedValue({ error: new Error('private database detail') });
+    const response = await confirm(new Request('https://league.test/auth/confirm?token_hash=private-hash&type=signup'));
+    expect(auth.signOut).toHaveBeenCalledWith({ scope: 'local' });
+    expect(response.headers.get('location')).toBe('https://league.test/login?error=access');
+    expect(response.headers.get('location')).not.toContain('private');
+  });
   it('does not verify unsupported flows or missing codes', async () => {
-    expect((await confirm(new Request('https://league.test/auth/confirm?token_hash=private&type=signup'))).headers.get('location')).toBe('https://league.test/login?error=link');
+    expect((await confirm(new Request('https://league.test/auth/confirm?token_hash=private&type=magiclink'))).headers.get('location')).toBe('https://league.test/login?error=link');
     await callback(new Request('https://league.test/auth/callback?next=/auth/password'));
     expect(auth.verifyOtp).not.toHaveBeenCalled();
     expect(auth.exchangeCodeForSession).not.toHaveBeenCalled();

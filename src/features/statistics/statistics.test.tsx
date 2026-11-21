@@ -12,4 +12,13 @@ describe('interactive statistics',()=>{
     expect(screen.getByRole('table').querySelectorAll('tbody tr')).toHaveLength(3);
   });
   it('provides an accessible empty state and numerical comparison',()=>{render(<Statistics tournament={makeTournament()} full/>);expect(screen.getByText(/blank ledger/)).toBeDefined();expect(screen.getAllByRole('table')).toHaveLength(2);expect(screen.getByLabelText(/Inspect match/).getAttribute('max')).toBe('0');});
+  it('renders unlimited v2 rosters, four finish positions, and appearance averages',()=>{
+    const players=[1,2,3,4,5].map(slot=>({slot,name:`Member ${slot}`,memberId:`member-${slot}`}));
+    const tournament=makeTournament([[1,2,3,4]],{rulesVersion:2,players,participants:[[1,2,3,4]]});
+    render(<Statistics tournament={tournament} full/>);
+    expect(screen.getByRole('columnheader',{name:'4th'})).toBeDefined();
+    expect(screen.getByRole('columnheader',{name:'Played'})).toBeDefined();
+    expect(screen.getAllByText('Member 5').length).toBeGreaterThan(1);
+    expect(screen.getByRole('img',{name:/every tournament participant/})).toBeDefined();
+  });
 });

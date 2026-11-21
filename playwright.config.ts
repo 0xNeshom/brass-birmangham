@@ -1,5 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const productionE2E = process.env.BRASS_E2E_PRODUCTION === '1';
+const port = process.env.BRASS_E2E_PORT ?? '3000';
+if (!/^\d{1,5}$/.test(port) || Number(port) < 1 || Number(port) > 65535) {
+  throw new Error('BRASS_E2E_PORT must be a valid port number.');
+}
+const baseURL = `http://localhost:${port}`;
+
 export default defineConfig({
   testDir: './tests/e2e',
   timeout: 60_000,
@@ -10,7 +17,8 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL,
+    reducedMotion: 'reduce',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -22,9 +30,11 @@ export default defineConfig({
     ] : []),
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    command: productionE2E
+      ? `npx next start --hostname 127.0.0.1 --port ${port}`
+      : `npx next dev --webpack --hostname 127.0.0.1 --port ${port}`,
+    url: baseURL,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });

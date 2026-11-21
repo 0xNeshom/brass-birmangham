@@ -1,70 +1,79 @@
-# Brass Tournament
+# Brass League
 
-A private, shared Brass: Birmingham tournament ledger for three invited players. A tournament contains ten matches; first, second, and third place score 10, 5, and 0 points. Rankings use points, first-place finishes, then second-place finishes, with shared wins when all three values tie. Tournament history and corrections are retained.
+A private Brass: Birmingham league with unlimited members, concurrent tournaments, and versioned rules. Existing three-player tournament history remains under rules version 1. New tournaments use four players per match, ten matches, and the current four-player scoring and tie-break rules.
 
-## Requirements and local development
+## Local development
 
-- Node.js 22 or newer and npm.
-- A Supabase project for shared authentication and persistence. The UI deliberately shows a setup-required state when the public Supabase settings are missing; it never substitutes fixture data for real tournament records.
+Requirements: Node.js 22+, npm, and a Supabase project or local Supabase instance.
 
 ```sh
-npm ci
 cp .env.example .env.local
-# Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-# and NEXT_PUBLIC_SITE_URL in .env.local.
+# Configure the three NEXT_PUBLIC_* values in .env.local.
 npm run dev
 ```
 
-Open <http://localhost:3000>. `npm run build`, `npm run typecheck`, `npm run lint`, `npm test`, `npm run test:e2e`, and `npm run test:db` are available. `npm run test:db` and the live Playwright workflow require a disposable local Supabase instance; they refuse non-local URLs and protect against pre-existing league data. Never point these destructive test suites at production.
+Use `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build` for local verification. `npm run test:db` and live browser tests require a disposable local Supabase instance. Never point destructive tests at production.
 
-## Supabase project setup
+## Supabase configuration
 
-1. Create a Supabase project and copy its project URL and publishable (formerly anon) key into the environment variables below. Keep database migrations under `supabase/migrations` and apply them with the Supabase CLI (`supabase link --project-ref <project-ref>` followed by `supabase db push`) or the SQL editor. The initial migration creates the singleton private group and all tournament tables, constraints, functions, policies, and Realtime publication membership.
-2. Confirm the `supabase_realtime` publication includes `public.tournaments`. The migration adds it when that publication exists; verify this in Database → Publications after migration.
-3. In Authentication → Providers, disable public email signups. Invite the three participants from the Supabase dashboard (or Auth Admin API run only from a trusted administrative environment). Set a strong password policy and configure SMTP before sending invitations/recovery mail.
-4. In Authentication → URL Configuration, set the Site URL to the canonical application origin. Add local (`http://localhost:3000/**`) and deployed callback URLs (`https://<your-domain>/auth/confirm`, `https://<your-domain>/auth/callback`) to the redirect allow list. Invite and recovery email templates should link through `/auth/confirm?token_hash={{ .TokenHash }}&type=invite` and `/auth/confirm?token_hash={{ .TokenHash }}&type=recovery` respectively.
-5. Add the three invited Auth user UUIDs to `public.group_members`, using the permanent group ID `00000000-0000-4000-8000-000000000001` and distinct `member_slot` values 1, 2, and 3. Run this statement as a trusted project administrator in the SQL editor; never expose an admin or service-role key in the app:
+The migration history is forward-only. Do not edit or replay `202611090001_tournament.sql`; the league and auth changes are in later migrations. Apply migrations only to the intended project after review and backup.
 
-```sql
-insert into public.group_members (group_id, user_id, member_slot) values
-  ('00000000-0000-4000-8000-000000000001', '<auth-user-uuid-1>', 1),
-  ('00000000-0000-4000-8000-000000000001', '<auth-user-uuid-2>', 2),
-  ('00000000-0000-4000-8000-000000000001', '<auth-user-uuid-3>', 3);
+Keep public email signup disabled until the `before_user_created` Auth Hook is configured and its allow/deny and failure behavior have been tested in a disposable Supabase project. The checked-in `supabase/config.toml` configures the hook for local Supabase. Hosted projects require the corresponding Before User Created hook to be enabled in Authentication → Hooks, targeting `public.before_user_created`. The app also checks the allowlist on its server registration action, but the Auth hook is required to reject direct signup attempts before account creation.
+
+Configure Authentication → URL Configuration with the canonical `NEXT_PUBLIC_SITE_URL`, and allow:
+
+- `http://localhost:3000/auth/confirm`
+- `http://localhost:3000/auth/callback`
+- The matching deployed `/auth/confirm` and `/auth/callback` URLs.
+
+Configure the email confirmation template to use the existing token-hash route:
+
+```text
+{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=signup&next=/dashboard
 ```
 
-The migration enables RLS on all application tables. Authenticated members can read their private group; direct browser table writes are revoked. Mutations go through authorization-checking RPC functions that validate membership, lock the group/tournament, and enforce expected versions. The app runtime uses only Supabase SSR cookies and the publishable key.
+SMTP must be configured before sending verification or recovery email. Preserve the existing invite and recovery template routes for legacy accounts.
+In Authentication → Providers → Email, keep **Confirm email** enabled so the app cannot rely on a password-only signup to activate membership.
 
 ## Environment variables
 
-| Variable | Use | Exposure |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Browser-visible |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase publishable key | Browser-visible; RLS remains mandatory |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin used by auth redirects and sign-out origin checks | Browser-visible |
-| `TEST_SUPABASE_URL` | Disposable local Supabase URL for integration/E2E tests | Test process only |
-| `TEST_SUPABASE_PUBLISHABLE_KEY` | Local test client key | Test process only |
-| `TEST_SUPABASE_SERVICE_ROLE_KEY` | Local test provisioning and cleanup only | Secret; never prefix with `NEXT_PUBLIC_` or deploy |
+| Variable | Purpose | Browser-visible |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Yes |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase publishable key; RLS still applies | Yes |
+| `NEXT_PUBLIC_SITE_URL` | Canonical auth redirect origin | Yes |
+| `SUPABASE_SECRET_KEY` | Server-only privileged database operations | No |
+| `BRASS_ADMIN_EMAIL` | Single administrator login name | No |
+| `BRASS_ADMIN_PASSWORD_HASH` | scrypt hash, never plaintext | No |
+| `BRASS_ADMIN_SESSION_SECRET` | At least 32 random bytes for session signing and rate-limit keys | No |
+| `TEST_SUPABASE_URL`, `TEST_SUPABASE_PUBLISHABLE_KEY`, `TEST_SUPABASE_SECRET_KEY` | Disposable local integration tests only | No |
 
-`.env.example` contains placeholders. For local development, `NEXT_PUBLIC_SITE_URL` should be `http://localhost:3000`; in a deployment it must match the canonical HTTPS origin exactly. Do not commit `.env.local` or put service-role credentials in Vercel application environment variables.
+Generate the administrator password hash interactively with `npm run admin:hash`; it does not echo the password. Configure all admin and privileged variables only in trusted server environments. Never use a `NEXT_PUBLIC_` prefix for them or commit `.env.local`.
 
-## Database migration and tests
+## Access and data safety
 
-The migration in `supabase/migrations/` is the source of truth. Make schema changes as forward migrations; do not edit an already-applied migration in a deployed project. Back up/export the database before applying changes and verify RLS and policies in the Supabase dashboard afterward.
+The administrator is separate from league membership. Admin pages and mutations validate a signed, HttpOnly, SameSite cookie against a server-side session record. The server actions use the privileged Supabase client; browser roles keep direct writes revoked. RLS checks active membership, and revocation changes the member row and allowlist status in one database transaction.
 
-For database integration tests, start a disposable local Supabase project, apply migrations, and set the `TEST_*` variables in `.env.local`. The script requires an empty database with no existing league members and creates temporary users/data; it cleans up only its own test records. The live Playwright journey additionally requires the application’s `NEXT_PUBLIC_*` Supabase settings to target the same local project. Without those settings, the live tests are skipped and live Supabase behavior is **not verified**.
+Registration is allowlist-gated, rate-limited, and requires email verification. Membership is activated by `activate_verified_membership()` only after Supabase confirms the email. Do not enable public signup if the Auth Hook is unavailable or failing open.
 
-Unit tests use Vitest and an isolated PGlite database where applicable. Browser configuration tests use Playwright Chromium. Set `PLAYWRIGHT_ALL_BROWSERS=1` to include Firefox and WebKit when their browser binaries and host libraries are available.
+Database tests use isolated PostgreSQL-in-WASM fixtures and apply the checked-in migrations. Live Supabase tests require `BRASS_ALLOW_LOCAL_SERVICE_ROLE_TESTS=1`, an HTTP loopback URL on port 54321, and a matching `NEXT_PUBLIC_SUPABASE_URL`; remote URLs are rejected. They do not verify hosted Supabase Auth Hook execution, hosted SMTP delivery, multi-connection races, or production RLS configuration. Keep `supabase/config.toml` signup disabled until those environment-specific checks pass.
 
-## Vercel deployment
+## Deployment
 
-1. Import this repository into Vercel and use the Next.js default build settings (`npm run build`). Node 22 is required.
-2. Add `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `NEXT_PUBLIC_SITE_URL` separately to Preview and Production environments. Use the matching Supabase project and exact canonical domain for each environment. Do not add `TEST_*` keys or any service-role key.
-3. Apply the migration to the intended Supabase project, configure Auth Site URL/callback allow lists and SMTP, disable public signup, and provision the three member rows before sharing the site.
-4. Deploy and smoke-test login, sign-out, read access from each invited account, one result save/edit, Realtime refresh, and unauthorized access denial. Keep an export/backup before production migrations and use a forward fix if a migration has been applied.
-
-The application does not need cron jobs, custom WebSocket infrastructure, or paid asset storage. Vercel Hobby suitability and resource limits can change; verify the current plan restrictions for your deployment before relying on it for ongoing use.
-
-## Security notes
-
-Only the Supabase URL and publishable key are permitted in browser bundles. RLS is enabled for each application table, writes are RPC-only, and the functions check the authenticated membership. The service-role key bypasses RLS and must remain in trusted administration or disposable local test environments. Review Supabase Auth redirect allow lists and database policies whenever the deployment domain or membership model changes.
-# brass-birmangham
+1. Run the local browser gate against the retained disposable stack with
+   `BRASS_E2E_SUPABASE_WORKDIR=/path/to/disposable-workdir BRASS_E2E_PORT=3031 bash scripts/test-e2e-local.sh`.
+   The runner checks the disposable project ID and loopback bindings before loading its keys.
+2. Use a dedicated hosted Supabase project and Vercel Preview for release verification.
+   Apply the two forward migrations, configure the Auth Hook, confirmation and recovery URLs,
+   and SMTP. Use that project's own environment values and administrator credentials.
+   With synthetic accounts, verify denied signup, email confirmation, access after revocation,
+   a four-player tournament, and historical reads and corrections.
+3. Before production promotion, take a database backup and verify the restore procedure.
+   Confirm the production project and pending migration list. Apply only the reviewed forward
+   migrations, then deploy the tested revision with the production URL and server-only secrets.
+   Check sign-in and existing history before allowing registration. Enable registration only
+   after confirming the deployed Auth Hook and real verification email delivery.
+4. If authentication or data checks fail, disable signup and pause tournament writes during
+   investigation. Keep the forward migrations recorded. Check schema compatibility before
+   reverting the app deployment. Resolve schema issues with a reviewed forward fix, or restore
+   the backup during a planned outage after accounting for writes made since the backup.
