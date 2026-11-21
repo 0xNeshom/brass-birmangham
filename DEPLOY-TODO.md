@@ -16,8 +16,11 @@
 
 ## ۲. پیش‌انتشار رایگان
 
-- [ ] پلن پروژهٔ فعلی و وجود یک جای خالی برای پروژهٔ دوم Supabase Free را بررسی کنیم. در صورت وجود ظرفیت، یک پروژهٔ Staging جدا با دادهٔ ساختگی بسازیم.
-- [ ] مهاجرت‌ها را روی Staging اعمال کنیم و Hook `public.before_user_created` و **Confirm email** را تنظیم کنیم.
+- [x] یک پروژهٔ Staging جدا با پلن Free ساخته شد و در Dashboard وضعیت Healthy دارد. منطقهٔ انتخاب‌شده ap-south-1 (Mumbai) است.
+- [x] Supabase CLI به شناسهٔ ۲۰ حرفی پروژهٔ Staging متصل شد.
+- [x] فهرست و dry-run روی brass-staging موفق بود و هر سه migration به‌ترتیب اعمال شدند. Migration پایه فقط برای ساخت Staging خالی استفاده شد و در Production دوباره اجرا نشد.
+- [x] در `brass-staging` گزینهٔ **Allow new users to sign up** خاموش است و **Confirm email** روشن است.
+- [x] در `brass-staging`، Hook فعال **Before User Created** به تابع Postgres `public.before_user_created` متصل شد. رفتار آن هنوز با signup واقعی در Staging آزمایش نشده است.
 - [ ] Vercel Hobby را به نسخهٔ آزمایشی وصل کنیم. آدرس ثابت آزمایشی، متغیرهای Preview و مسیرهای تأیید و بازیابی را طبق [README](./README.md#supabase-configuration) تنظیم کنیم. کلیدهای Preview فقط متعلق به Staging باشند.
 - [ ] SMTP رایگان را در Staging راه‌اندازی کنیم و ایمیل تأیید و بازیابی را روی حساب‌های آزمایشی دریافت کنیم.
 - [ ] با ثبت‌نام آزمایشی در Staging بررسی کنیم که درخواست تأییدنشده از خود Supabase هم رد می‌شود، حساب تأیید‌نشده به داده‌ها دسترسی ندارد، لغو عضویت نشست موجود را از داده‌ها محروم می‌کند و تورنمنت‌ها و تاریخچه درست کار می‌کنند.
