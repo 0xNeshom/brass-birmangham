@@ -2,6 +2,7 @@
 // Supabase Auth/PostgREST/Realtime require the separate local integration script.
 import { readFile } from 'node:fs/promises';
 import { PGlite } from '@electric-sql/pglite';
+import { randomUUID } from 'node:crypto';
 import { beforeAll, afterAll, expect, test } from 'vitest';
 import type { Tournament } from '@/domain/tournament';
 import { nameKey } from '@/domain/name-key';
@@ -41,15 +42,19 @@ async function snapshot(id: string) {
 async function save(id: string, n: number, version: number, placements = [1,2,3]) {
   return db.query('select public.save_match_result($1,$2,$3,$4)', [id,n,placements,version]);
 }
+function freshCodeHash() { return `${randomUUID().replaceAll('-', '')}${randomUUID().replaceAll('-', '')}`; }
+async function createV2(title: string) {
+  return (await db.query<{id:string}>('select public.create_league_tournament($1,$2) as id',[title,freshCodeHash()])).rows[0].id;
+}
 beforeAll(async () => {
   db = new PGlite();
   await db.exec(`create role anon; create role authenticated; create role service_role bypassrls; create role supabase_auth_admin; create schema auth;
-    create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz);
+    create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,raw_app_meta_data jsonb,raw_user_meta_data jsonb not null default '{}'::jsonb);
     create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
     create function auth.role() returns text language sql stable as $$select nullif(current_setting('request.jwt.claim.role',true),'')$$;
     grant usage on schema auth to anon,authenticated,service_role,supabase_auth_admin;
     grant execute on function auth.uid(),auth.role() to anon,authenticated,service_role,supabase_auth_admin;
-    insert into auth.users values
+    insert into auth.users(id,email,email_confirmed_at) values
       ('${member}','member@example.com',now()),('${outsider}','outsider@example.com',now()),
       ('${member2}','member2@example.com',now()),('${member3}','member3@example.com',now()),('${member4}','member4@example.com',now()),('${member5}','member5@example.com',now());`);
   await db.exec(await readFile(new URL('../../supabase/migrations/202611090001_tournament.sql',import.meta.url),'utf8'));
@@ -61,6 +66,8 @@ beforeAll(async () => {
   await db.exec(await readFile(new URL('../../supabase/migrations/202611140001_league_v2.sql',import.meta.url),'utf8'));
   await db.query('insert into public.group_members(group_id,user_id) values($1,$2),($1,$3),($1,$4),($1,$5)',[group,member2,member3,member4,member5]);
   await db.exec(await readFile(new URL('../../supabase/migrations/202611140002_auth_access.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL('../../supabase/migrations/202611220001_league_invites.sql',import.meta.url),'utf8'));
+  await db.exec(await readFile(new URL('../../supabase/migrations/202611220002_tournament_registration.sql',import.meta.url),'utf8'));
 }, 30000);
 afterAll(async () => { await db?.close(); });
 test('frozen Unicode casefold agrees across SQL, validation, generated keys and snapshot decoding', async () => {
@@ -99,13 +106,13 @@ test('anonymous and outsiders cannot access private data or mutation RPCs', asyn
   await expect(db.query("select public.create_league_tournament('Anonymous')")).rejects.toThrow(/permission denied/);
   await expect(db.query('select * from public.tournaments')).rejects.toThrow(/permission denied/);
   await asUser('');
-  await expect(db.query("select public.create_league_tournament('Unauthenticated')")).rejects.toThrow('AUTH_REQUIRED');
+  await expect(db.query("select public.create_league_tournament('Unauthenticated',$1)",[freshCodeHash()])).rejects.toThrow('AUTH_REQUIRED');
   await asUser(outsider);
   expect((await db.query('select * from public.tournaments')).rows).toEqual([]);
   expect((await db.query('select * from public.group_members')).rows).toEqual([]);
-  await expect(db.query("select public.create_league_tournament('Outsider')")).rejects.toThrow('FORBIDDEN');
+  await expect(db.query("select public.create_league_tournament('Outsider',$1)",[freshCodeHash()])).rejects.toThrow('FORBIDDEN');
   await expect(db.query('select public.list_tournaments()')).rejects.toThrow('FORBIDDEN');
-  await expect(db.query('select public.create_league_tournament($1)',['Outsider'])).rejects.toThrow('FORBIDDEN');
+  await expect(db.query('select public.create_league_tournament($1,$2)',['Outsider',freshCodeHash()])).rejects.toThrow('FORBIDDEN');
   await expect(db.query('select public.list_league_tournaments()')).rejects.toThrow('FORBIDDEN');
 });
 test('forward migration preserves completed v1 rows and historical player snapshots', async () => {
@@ -129,7 +136,7 @@ test('v2 league RPCs support an unlimited roster, exact four-player results and 
     await db.query('select public.set_member_profile($1)',[name]);
   }
   await asUser(member);
-  const underfilled = (await db.query<{id:string}>("select public.create_league_tournament('Underfilled roster') as id")).rows[0].id;
+  const underfilled = await createV2('Underfilled roster');
   for (const user of [member,member2,member3]) {
     await asUser(user);
     await db.query('select public.join_tournament_roster($1)',[underfilled]);
@@ -143,7 +150,7 @@ test('v2 league RPCs support an unlimited roster, exact four-player results and 
   await db.query("select public.set_member_profile('Bea Global')");
   await asUser(member);
   await expect(db.query('select public.select_match_participants($1,1,array[1,2,3,4])',[underfilled])).rejects.toThrow('ROSTER_REQUIRES_FOUR_MEMBERS');
-  const first = (await db.query<{id:string}>("select public.create_league_tournament('Four player campaign') as id")).rows[0].id;
+  const first = await createV2('Four player campaign');
   const slots: number[] = [];
   for (const user of [member,member2,member3,member4,member5]) {
     await asUser(user);
@@ -168,7 +175,7 @@ test('v2 league RPCs support an unlimited roster, exact four-player results and 
   await db.query("select public.set_member_profile('Ada Historical')");
   expect((await db.query<{name:string}>('select name from public.players where tournament_id=$1 and member_user_id=$2',[first,member])).rows[0].name).toBe('Ada Global');
   await db.query("select public.set_member_profile('Ada Global')");
-  const second = (await db.query<{id:string}>("select public.create_league_tournament('Independent campaign') as id")).rows[0].id;
+  const second = await createV2('Independent campaign');
   for (const user of [member,member2,member3,member4]) {
     await asUser(user);
     await db.query('select public.join_tournament_roster($1)',[second]);
@@ -188,25 +195,44 @@ test('database constraints reject tournaments with a match count other than ten'
   await expect(db.exec('commit')).rejects.toThrow('TOURNAMENT_REQUIRES_TEN_MATCHES');
   await db.exec('rollback');
 });
-test('signup hook blocks unknown emails and membership activates only after verification', async () => {
+test('tournament codes gate enrollment, reject rotated invites and atomically add roster membership', async () => {
+  await asUser('', 'supabase_auth_admin');
+  const result = await db.query<{ value: { error: { http_code: number } } }>(
+    "select public.before_user_created('{\"user\":{\"email\":\"someone@example.com\"}}') as value",
+  );
+  expect(result.rows[0].value.error.http_code).toBe(403);
+  await asUser(outsider);
+  await expect(db.query('select * from public.lookup_tournament_invite($1)', ['a'.repeat(64)])).rejects.toThrow(/permission denied/);
+  await expect(db.query('select public.activate_verified_membership()')).rejects.toThrow(/permission denied/);
+
+  await asUser('', 'service_role');
+  const actor = 'admin@example.com';
+  const firstHash = 'a'.repeat(64);
+  const nextHash = 'b'.repeat(64);
+  const tournamentId = (await db.query<{ id: string }>(
+    'select public.admin_create_league_tournament($1,$2,$3) as id', ['Invite lifecycle', firstHash, actor],
+  )).rows[0].id;
+  const previous = (await db.query<{ invite_id: string }>('select invite_id from public.lookup_tournament_invite($1)', [firstHash])).rows[0].invite_id;
+  await db.query('select public.rotate_tournament_invite($1,$2,$3)', [tournamentId, nextHash, actor]);
+  expect((await db.query('select * from public.lookup_tournament_invite($1)', [firstHash])).rows).toEqual([]);
+  const current = (await db.query<{ invite_id: string }>('select invite_id from public.lookup_tournament_invite($1)', [nextHash])).rows[0].invite_id;
+
   await db.exec('reset role');
-  await db.query("insert into public.allowed_emails(email_normalized,status,approved_by) values('new.member@example.com','approved','admin@example.com')");
-  await db.exec("reset role; set role supabase_auth_admin; select set_config('request.jwt.claim.role','supabase_auth_admin',false)");
-  const permitted = (await db.query<{value:unknown}>("select public.before_user_created($1::jsonb) as value", [JSON.stringify({ user: { email: 'New.Member@Example.com' } })])).rows[0].value;
-  expect(permitted).toEqual({});
-  expect((await db.query<{status:string}>("select status from public.allowed_emails where email_normalized='new.member@example.com'")).rows[0].status).toBe('pending_verification');
-  const denied = (await db.query<{value:{error:{http_code:number}}}>("select public.before_user_created($1::jsonb) as value", [JSON.stringify({ user: { email: 'unknown@example.com' } })])).rows[0].value;
-  expect(denied.error.http_code).toBe(403);
-  await db.exec('reset role');
-  await db.query("insert into auth.users values($1,'new.member@example.com',null)", ['00000000-0000-4000-8000-000000000008']);
-  await asUser('00000000-0000-4000-8000-000000000008');
-  await expect(db.query('select public.activate_verified_membership()')).rejects.toThrow('EMAIL_NOT_VERIFIED');
-  await db.exec('reset role');
-  await db.query("update auth.users set email_confirmed_at=now() where id='00000000-0000-4000-8000-000000000008'");
-  await asUser('00000000-0000-4000-8000-000000000008');
-  expect((await db.query<{ group_id: string }>('select public.activate_verified_membership() as group_id')).rows[0].group_id).toBe(group);
-  await db.query('select public.activate_verified_membership()');
-  expect((await db.query<{ n: number }>("select count(*)::int as n from public.group_members where user_id='00000000-0000-4000-8000-000000000008' and status='active'")).rows[0].n).toBe(1);
+  const userId = '00000000-0000-4000-8000-000000000008';
+  const appMetadata = (id: string) => JSON.stringify({ brass_tournament_invite_id: id });
+  const userMetadata = JSON.stringify({ display_name: 'New Tournament Member' });
+  await expect(db.query("insert into auth.users(id,email,raw_app_meta_data,raw_user_meta_data) values($1,'new@example.com',$2::jsonb,$3::jsonb)", [
+    userId, appMetadata(previous), userMetadata,
+  ])).rejects.toThrow('INVALID_TOURNAMENT_INVITE');
+  expect((await db.query('select id from auth.users where id=$1', [userId])).rows).toEqual([]);
+
+  await db.query("insert into auth.users(id,email,raw_user_meta_data) values($1,'new@example.com',$2::jsonb)", [userId,userMetadata]);
+  expect((await db.query('select user_id from public.group_members where user_id=$1', [userId])).rows).toEqual([]);
+  await db.query('update auth.users set raw_app_meta_data=$2::jsonb where id=$1', [userId, appMetadata(current)]);
+  await asUser(userId);
+  expect((await db.query('select group_id,status from public.group_members')).rows).toEqual([{ group_id: group, status: 'active' }]);
+  expect((await db.query('select display_name from public.member_profiles where user_id=$1', [userId])).rows).toEqual([{ display_name: 'New Tournament Member' }]);
+  expect((await db.query('select tournament_id,member_user_id from public.players where member_user_id=$1', [userId])).rows).toEqual([{ tournament_id: tournamentId, member_user_id: userId }]);
 });
 test('atomic lifecycle, validation, optimistic versions, corrections and coherent history', async () => {
   await asUser(member);
@@ -265,8 +291,8 @@ test('allowlist administration is restricted, revocation immediately removes acc
   await asUser('', 'service_role');
   expect((await db.query('select user_id from public.group_members')).rows.length).toBeGreaterThan(0);
   expect((await db.query('select display_name from public.member_profiles')).rows.length).toBeGreaterThan(0);
-  await db.query("select public.admin_revoke_email('MEMBER2@EXAMPLE.COM','admin@example.com')");
-  await expect(db.query("select public.admin_approve_email('bad-email','admin@example.com')")).rejects.toThrow('VALIDATION');
+  await db.query("select public.admin_revoke_league_member($1,'admin@example.com')", [member2]);
+  await expect(db.query("select public.admin_approve_email('bad-email','admin@example.com')")).rejects.toThrow(/permission denied/);
   expect((await db.query<{value:boolean}>('select public.consume_auth_rate_limit($1,2,900) as value', ['a'.repeat(64)])).rows[0].value).toBe(true);
   expect((await db.query<{value:boolean}>('select public.consume_auth_rate_limit($1,2,900) as value', ['a'.repeat(64)])).rows[0].value).toBe(true);
   expect((await db.query<{value:boolean}>('select public.consume_auth_rate_limit($1,2,900) as value', ['a'.repeat(64)])).rows[0].value).toBe(false);

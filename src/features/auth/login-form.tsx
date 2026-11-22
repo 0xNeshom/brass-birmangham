@@ -41,5 +41,5 @@ export function LoginForm({ linkError = false, recovery = false }: { linkError?:
       {sent && <p className={styles.status} role="status">If an account uses this email, a recovery link will arrive shortly. Check your inbox and spam folder.</p>}
       <button type="submit" className={`button ${styles.submit}`} disabled={busy}>{busy ? 'Please wait…' : recovering ? 'Send recovery link' : 'Enter the league'}<ArrowRight size={17} aria-hidden="true" /></button>
       <button type="button" className={styles.textButton} disabled={busy} onClick={() => { setRecovering(!recovering); setError(''); setSent(false); }}>{recovering ? 'Return to sign in' : 'Forgot your password?'}</button>
-    </form><p className={styles.accessNote}>League access is available to approved members. <a href="/register">Register with an approved email</a>.</p></>;
+    </form><p className={styles.accessNote}><a href="/register">Register with a tournament code</a>.</p></>;
 }

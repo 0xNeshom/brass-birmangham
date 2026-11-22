@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { test, expect, type Browser, type BrowserContext, type Page } from '@playwright/test';
 import {
-  ADMIN_EMAIL, ADMIN_PASSWORD, APP_ORIGIN, assertNoServiceCredentialInBrowser,
-  confirmationToken, e2eEnabled, localAdminClient, runEmail, watchBrowserResponses,
+  ADMIN_EMAIL, ADMIN_PASSWORD, assertNoServiceCredentialInBrowser,
+  createAdminTournament, e2eEnabled, localAdminClient, runEmail, watchBrowserResponses,
 } from './local-support';
 
 async function adminLogin(page: Page) {
@@ -15,38 +15,32 @@ async function adminLogin(page: Page) {
   await expect(page).toHaveURL(/\/admin\/members$/);
 }
 
-async function approve(page: Page, email: string) {
-  await page.goto('/admin/members');
-  await page.getByLabel('Email address', { exact: true }).fill(email);
-  await page.getByRole('button', { name: 'Approve', exact: true }).click();
-  await expect(page.getByRole('status')).toHaveText('Access list updated.');
-}
-
-async function registerMember(page: Page, email: string, password: string) {
+async function registerMember(page: Page, email: string, password: string, code: string, displayName: string, tournamentTitle: string) {
   await page.goto('/register');
   const disable3d = page.getByRole('button', { name: 'Disable 3D' });
   if (await disable3d.isVisible()) await disable3d.click();
   await page.getByLabel('Email address').fill(email);
+  await page.getByLabel('Display name', { exact: true }).fill(displayName);
+  await page.getByLabel('Tournament code', { exact: true }).fill(code);
   await page.getByLabel('Password', { exact: true }).fill(password);
   await page.getByLabel('Confirm password').fill(password);
-  await page.getByRole('button', { name: 'Request verification' }).click();
-  await expect(page.getByRole('status')).toHaveText('If this address is approved, a verification email will be sent shortly.');
-  const token = await confirmationToken(email);
-  await page.goto(`/auth/confirm?token_hash=${encodeURIComponent(token)}&type=signup&next=/dashboard`);
-  await expect(page).toHaveURL(`${APP_ORIGIN}/`);
-  await expect(page.getByRole('heading', { name: 'Every tournament, one ledger.' })).toBeVisible();
+  await page.getByRole('button', { name: 'Create account and join tournament' }).click();
+  await expect(page).toHaveURL(/\/tournaments\/[0-9a-f-]{36}$/);
+  await expect(page.getByRole('heading', { name: tournamentTitle, exact: true })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole('heading', { name: 'Every tournament, one ledger.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: tournamentTitle, exact: true })).toBeVisible();
 }
 
 async function createTournament(page: Page, title: string) {
   await page.goto('/tournaments/new');
   await page.getByLabel('Tournament title').fill(title);
-  await page.getByRole('button', { name: 'Create tournament' }).click();
+  await page.getByRole('button', { name: 'Create tournament and invite code' }).click();
+  const inviteCode = await page.getByLabel('Tournament invite code').inputValue();
+  await page.getByRole('link', { name: 'Open tournament' }).click();
   await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
   const match = page.url().match(/\/tournaments\/([0-9a-f-]{36})/i);
   expect(match?.[1]).toBeTruthy();
-  return { id: match![1], url: page.url() };
+  return { id: match![1], url: page.url(), inviteCode };
 }
 
 async function setProfileAndJoin(page: Page, tournamentUrl: string, name: string) {
@@ -75,10 +69,10 @@ async function chooseRanking(article: ReturnType<Page['locator']>, slots: number
 
 async function registerRoster(
   browser: Browser,
-  adminPage: Page,
-  tournamentUrl: string,
+  code: string,
   runLabel: string,
   responseChecks: (() => Promise<void>)[],
+  tournamentTitle: string,
 ): Promise<{ contexts: BrowserContext[]; pages: Page[]; emails: string[]; names: string[] }> {
   const contexts: BrowserContext[] = [];
   const pages: Page[] = [];
@@ -90,20 +84,18 @@ async function registerRoster(
     const password = `Roster-${randomUUID()}-Aa1!`;
     emails.push(email);
     names.push(displayName);
-    await approve(adminPage, email);
     const context = await browser.newContext({ reducedMotion: 'reduce' });
     contexts.push(context);
     const page = await context.newPage();
     responseChecks.push(watchBrowserResponses(page));
     pages.push(page);
-    await registerMember(page, email, password);
-    await setProfileAndJoin(page, tournamentUrl, displayName);
+    await registerMember(page, email, password, code, displayName, tournamentTitle);
   }
   return { contexts, pages, emails, names };
 }
 
 test.describe('local v2 member application journey', () => {
-  test.skip(!e2eEnabled, 'Requires the explicitly guarded brass-auth-it-4dpoxpp2 disposable local Supabase project.');
+  test.skip(!e2eEnabled, 'Requires the explicitly guarded brass-invite-it disposable local Supabase project.');
 
   test('concurrent tournaments, global profiles, four-player sequential results, history, statistics, and revocation', async ({ browser }) => {
     test.setTimeout(300_000);
@@ -119,22 +111,24 @@ test.describe('local v2 member application journey', () => {
       const primaryEmail = runEmail(`${run}-member-1`);
       const primaryName = `E2E ${run} 1`;
       const primaryPassword = `Roster-${randomUUID()}-Aa1!`;
-      await approve(adminPage, primaryEmail);
+      const firstTitle = `Browser ${run} · Ten matches`;
+      const code = await createAdminTournament(adminPage, firstTitle);
       const primaryContext = await browser.newContext({ reducedMotion: 'reduce' });
       memberContexts.push(primaryContext);
       primaryPage = await primaryContext.newPage();
       responseChecks.push(watchBrowserResponses(primaryPage));
-      await registerMember(primaryPage, primaryEmail, primaryPassword);
-
-      const first = await createTournament(primaryPage, `Browser ${run} · Ten matches`);
+      await registerMember(primaryPage, primaryEmail, primaryPassword, code, primaryName, firstTitle);
+      const firstMatch = primaryPage.url().match(/\/tournaments\/([0-9a-f-]{36})/i);
+      expect(firstMatch?.[1]).toBeTruthy();
+      const first = { id: firstMatch![1], url: primaryPage.url() };
       await primaryPage.goto('/');
       const second = await createTournament(primaryPage, `Browser ${run} · Parallel ledger`);
       await primaryPage.goto('/');
       await expect(primaryPage.getByText(`Browser ${run} · Ten matches`, { exact: true })).toBeVisible();
       await expect(primaryPage.getByText(`Browser ${run} · Parallel ledger`, { exact: true })).toBeVisible();
-      await setProfileAndJoin(primaryPage, first.url, primaryName);
+      await setProfileAndJoin(primaryPage, second.url, primaryName);
 
-      const roster = await registerRoster(browser, adminPage, first.url, run, responseChecks);
+      const roster = await registerRoster(browser, code, run, responseChecks, firstTitle);
       memberContexts.push(...roster.contexts);
       roster.contexts.unshift(primaryContext);
       roster.pages.unshift(primaryPage);
@@ -196,7 +190,7 @@ test.describe('local v2 member application journey', () => {
       const memberRow = adminPage.getByRole('row').filter({ hasText: roster.emails[0] });
       await expect(memberRow).toContainText('active');
       await memberRow.getByRole('button', { name: 'Revoke', exact: true }).click();
-      await expect(adminPage.getByRole('status')).toHaveText('Access list updated.');
+      await expect(adminPage.getByRole('status')).toHaveText('Member access revoked.');
 
       await primaryPage.goto('/');
       await expect(primaryPage).toHaveURL(/\/access-required$/);
@@ -217,7 +211,7 @@ test.describe('local v2 member application journey', () => {
         const row = adminPage.getByRole('row').filter({ hasText: email });
         if (await row.getByRole('button', { name: 'Revoke', exact: true }).count()) {
           await row.getByRole('button', { name: 'Revoke', exact: true }).click();
-          await expect(adminPage.getByRole('status')).toHaveText('Access list updated.');
+          await expect(adminPage.getByRole('status')).toHaveText('Member access revoked.');
         }
       }
       expect(second.id).not.toBe(first.id);

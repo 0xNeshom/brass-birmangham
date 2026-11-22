@@ -25,7 +25,7 @@ export type Database = {
       read_tournament: { Args: { p_id: string }; Returns: Json };
       list_tournaments: { Args: { p_cursor?: string | null; p_limit?: number }; Returns: Json };
       set_member_profile: { Args: { p_display_name: string }; Returns: undefined };
-      create_league_tournament: { Args: { p_title: string }; Returns: string };
+      create_league_tournament: { Args: { p_title: string; p_code_hash: string }; Returns: string };
       join_tournament_roster: { Args: { p_tournament_id: string }; Returns: number };
       leave_tournament_roster: { Args: { p_tournament_id: string }; Returns: undefined };
       select_match_participants: { Args: { p_tournament_id: string; p_match_number: number; p_player_slots: number[] }; Returns: undefined };
@@ -34,6 +34,12 @@ export type Database = {
       list_league_tournaments: { Args: { p_cursor?: string | null; p_limit?: number }; Returns: Json };
       before_user_created: { Args: { event: Json }; Returns: Json };
       activate_verified_membership: { Args: Record<PropertyKey, never>; Returns: string };
+      rotate_tournament_invite: { Args: { p_tournament_id: string; p_code_hash: string; p_actor: string }; Returns: undefined };
+      lookup_tournament_invite: { Args: { p_code_hash: string }; Returns: { invite_id: string; tournament_id: string }[] };
+      admin_create_league_tournament: { Args: { p_title: string; p_code_hash: string; p_actor: string }; Returns: string };
+      admin_list_league_tournaments: { Args: Record<PropertyKey, never>; Returns: { id: string; title: string; created_at: string; code_updated_at: string | null; can_invite: boolean }[] };
+      admin_revoke_league_member: { Args: { p_user_id: string; p_actor: string }; Returns: undefined };
+      admin_list_league_members: { Args: Record<PropertyKey, never>; Returns: { user_id: string; email: string | null; display_name: string | null; status: string; revoked_at: string | null }[] };
       admin_approve_email: { Args: { p_email: string; p_actor: string }; Returns: string };
       admin_revoke_email: { Args: { p_email: string; p_actor: string }; Returns: undefined };
       consume_auth_rate_limit: { Args: { p_rate_key: string; p_max_attempts: number; p_window_seconds: number }; Returns: boolean };

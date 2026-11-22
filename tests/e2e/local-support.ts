@@ -6,9 +6,8 @@ import { join } from 'node:path';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '../../src/lib/database.types';
 
-export const LOCAL_PROJECT_ID = 'brass-auth-it-4dpoxpp2';
-export const LOCAL_API_URL = 'http://127.0.0.1:54321';
-export const LOCAL_MAILPIT_URL = 'http://127.0.0.1:54324';
+export const LOCAL_PROJECT_ID = 'brass-invite-it';
+export const LOCAL_API_URL = 'http://127.0.0.1:54351';
 export const E2E_RUN_ID = (process.env.BRASS_E2E_RUN_ID ?? randomUUID()).replaceAll('-', '').slice(0, 12);
 export const ADMIN_EMAIL = process.env.BRASS_ADMIN_EMAIL ?? '';
 export const ADMIN_PASSWORD = process.env.BRASS_E2E_ADMIN_PASSWORD ?? '';
@@ -40,9 +39,8 @@ export function localAdminClient(): SupabaseClient<Database> {
   assert.equal(process.env.BRASS_EXPECTED_LOCAL_PROJECT_ID, LOCAL_PROJECT_ID);
   assert.equal(process.env.TEST_SUPABASE_URL, LOCAL_API_URL);
   assert.equal(process.env.NEXT_PUBLIC_SUPABASE_URL, LOCAL_API_URL);
-  assert.equal(new URL(process.env.TEST_SUPABASE_URL ?? '').port, '54321');
-  inspectLocalBinding(`supabase_kong_${LOCAL_PROJECT_ID}`, '8000/tcp', '54321');
-  inspectLocalBinding(`supabase_inbucket_${LOCAL_PROJECT_ID}`, '8025/tcp', '54324');
+  assert.equal(new URL(process.env.TEST_SUPABASE_URL ?? '').port, '54351');
+  inspectLocalBinding(`supabase_kong_${LOCAL_PROJECT_ID}`, '8000/tcp', '54351');
   const secretKey = process.env.TEST_SUPABASE_SECRET_KEY;
   assert(secretKey, 'Missing disposable local service credential.');
   return createClient<Database>(LOCAL_API_URL, secretKey, {
@@ -54,35 +52,22 @@ export function runEmail(label: string): string {
   return `e2e-${label}-${E2E_RUN_ID}@example.test`;
 }
 
-async function messageFor(email: string) {
-  const response = await fetch(`${LOCAL_MAILPIT_URL}/api/v1/messages?limit=100`);
-  assert(response.ok, 'Local Mailpit must be reachable.');
-  const { messages = [] } = await response.json() as { messages?: { ID?: string; To?: { Address?: string }[] }[] };
-  for (const message of messages) {
-    if (!message.To?.some((recipient) => recipient.Address?.toLowerCase() === email.toLowerCase())) continue;
-    if (!message.ID) continue;
-    const detailResponse = await fetch(`${LOCAL_MAILPIT_URL}/api/v1/message/${encodeURIComponent(message.ID)}`);
-    if (!detailResponse.ok) continue;
-    const detail = await detailResponse.json() as { HTML?: string; Text?: string };
-    return `${detail.HTML ?? ''}\n${detail.Text ?? ''}`;
-  }
-  return null;
+export async function createAdminTournament(page: import('@playwright/test').Page, title: string): Promise<string> {
+  await page.goto('/admin/members');
+  await page.getByLabel('Tournament title').fill(title);
+  await page.getByRole('button', { name: 'Create tournament and code' }).click();
+  const code = page.getByLabel('Tournament invite code');
+  await code.waitFor();
+  return code.inputValue();
 }
 
-export async function confirmationToken(email: string, timeoutMs = 30_000): Promise<string> {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    const body = await messageFor(email);
-    for (const match of body?.match(/https?:\/\/[^\s"'<>]+/g) ?? []) {
-      try {
-        const url = new URL(match.replaceAll('&amp;', '&').replaceAll('&#x3D;', '='));
-        const token = url.searchParams.get('token_hash') ?? url.searchParams.get('token');
-        if (token && (url.searchParams.get('type') === 'signup' || url.searchParams.get('type') === 'email')) return token;
-      } catch { /* Ignore non-link template text. */ }
-    }
-    await new Promise((resolve) => setTimeout(resolve, 400));
-  }
-  throw new Error('Local Mailpit did not receive the expected signup verification email.');
+export async function issueTournamentCode(page: import('@playwright/test').Page, title: string): Promise<string> {
+  await page.goto('/admin/members');
+  const row = page.getByRole('row').filter({ hasText: title });
+  await row.getByRole('button', { name: /^(Generate|Replace) tournament code$/ }).click();
+  const code = row.getByLabel('Tournament code');
+  await code.waitFor();
+  return code.inputValue();
 }
 
 function assertNoServiceCredential(body: string, surface: string): void {

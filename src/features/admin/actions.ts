@@ -7,6 +7,7 @@ import { adminDatabaseClient } from '@/lib/supabase/admin';
 import { ADMIN_COOKIE, adminCookieOptions, consumeRateLimit, createAdminSessionCookie, requestIpKey, requireAdmin, revokeAdminSessionToken } from '@/lib/admin-session';
 import { verifyAdminPassword } from '@/lib/admin-crypto';
 import { normalizeEmail } from '@/features/auth/registration';
+import { generateLeagueCode, hashLeagueCode } from '@/lib/league-invite';
 
 export type AdminLoginState = { message: string };
 
@@ -45,21 +46,39 @@ export async function logoutAdmin() {
   redirect('/admin/login');
 }
 
-export async function approveEmail(formData: FormData) {
+export type LeagueCodeState = { code?: string; error?: string };
+export type AdminTournamentState = { id?: string; code?: string; error?: string };
+
+export async function createAdminTournamentInvite(_previous: AdminTournamentState, formData: FormData): Promise<AdminTournamentState> {
   const { email: actor } = await requireAdmin();
-  const email = normalizeEmail(String(formData.get('email') ?? ''));
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) redirect('/admin/members?error=invalid');
-  const { error } = await adminDatabaseClient().rpc('admin_approve_email', { p_email: email, p_actor: actor });
-  if (error) redirect('/admin/members?error=unavailable');
+  const title = String(formData.get('title') ?? '').trim();
+  if (!title || Array.from(title).length > 80) return { error: 'Tournament title must contain 1–80 characters.' };
+  const code = generateLeagueCode();
+  const { data: id, error } = await adminDatabaseClient().rpc('admin_create_league_tournament', {
+    p_title: title, p_code_hash: hashLeagueCode(code), p_actor: actor,
+  });
+  if (error || !id) return { error: 'Could not create this tournament.' };
   revalidatePath('/admin/members');
-  redirect('/admin/members?updated=1');
+  return { id, code };
 }
 
-export async function revokeEmail(formData: FormData) {
+export async function rotateTournamentInvite(tournamentId: string, _previous: LeagueCodeState): Promise<LeagueCodeState> {
   const { email: actor } = await requireAdmin();
-  const email = normalizeEmail(String(formData.get('email') ?? ''));
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) redirect('/admin/members?error=invalid');
-  const { error } = await adminDatabaseClient().rpc('admin_revoke_email', { p_email: email, p_actor: actor });
+  if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(tournamentId)) return { error: 'Invalid tournament.' };
+  const code = generateLeagueCode();
+  const { error } = await adminDatabaseClient().rpc('rotate_tournament_invite', {
+    p_tournament_id: tournamentId, p_code_hash: hashLeagueCode(code), p_actor: actor,
+  });
+  if (error) return { error: 'Could not generate a tournament code.' };
+  revalidatePath('/admin/members');
+  return { code };
+}
+
+export async function revokeLeagueMember(formData: FormData) {
+  const { email: actor } = await requireAdmin();
+  const userId = String(formData.get('userId') ?? '');
+  if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(userId)) redirect('/admin/members?error=invalid');
+  const { error } = await adminDatabaseClient().rpc('admin_revoke_league_member', { p_user_id: userId, p_actor: actor });
   if (error) redirect('/admin/members?error=unavailable');
   revalidatePath('/admin/members');
   redirect('/admin/members?updated=1');

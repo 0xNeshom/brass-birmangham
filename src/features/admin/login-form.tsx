@@ -9,7 +9,7 @@ const initialState: AdminLoginState = { message: '' };
 export function AdminLoginForm() {
   const [state, action, pending] = useActionState(loginAdmin, initialState);
   return <>
-    <p className="eyebrow">ADMINISTRATOR</p><h2>League controls.</h2><p>Sign in to manage approved email addresses and membership access.</p>
+    <p className="eyebrow">ADMINISTRATOR</p><h2>League controls.</h2><p>Sign in to create tournaments, manage their invite codes, and control member access.</p>
     <form className={styles.form} action={action} aria-busy={pending}>
       <div className="field"><label htmlFor="admin-email">Administrator email</label><input id="admin-email" name="email" type="email" autoComplete="username" maxLength={254} required /></div>
       <div className="field"><label htmlFor="admin-password">Password</label><input id="admin-password" name="password" type="password" autoComplete="current-password" maxLength={1024} required /></div>

@@ -1,6 +1,6 @@
 /** One-shot integration test: disposable local Supabase only. Never production. */
 import assert from 'node:assert/strict';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 
 const url = process.env.TEST_SUPABASE_URL;
@@ -34,7 +34,8 @@ const users = [];
 function ok(result) { if (result.error) throw result.error; return result.data; }
 function errorContains(result, text) { assert(result.error?.message.includes(text), JSON.stringify(result.error)); }
 async function makeTournament(client, title) {
-  const id = ok(await client.rpc('create_league_tournament', { p_title: title }));
+  const p_code_hash = createHash('sha256').update(randomBytes(32)).digest('hex');
+  const id = ok(await client.rpc('create_league_tournament', { p_title: title, p_code_hash }));
   return id;
 }
 

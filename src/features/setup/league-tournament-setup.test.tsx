@@ -4,21 +4,20 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { CreateLeagueTournament } from './create-league-tournament';
 import { createLeagueTournamentAction } from '@/lib/actions';
 
-const push = vi.fn();
-vi.mock('next/navigation', () => ({ useRouter: () => ({ push, refresh: vi.fn() }) }));
 vi.mock('@/lib/actions', () => ({ createLeagueTournamentAction: vi.fn() }));
 
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
 describe('league tournament setup', () => {
   it('creates a v2 campaign without asking for fixed player names', async () => {
-    vi.mocked(createLeagueTournamentAction).mockResolvedValue({ ok: true, value: 'new-id' });
+    vi.mocked(createLeagueTournamentAction).mockResolvedValue({ ok: true, value: { id: 'new-id', inviteCode: 'A'.repeat(32) } });
     render(<CreateLeagueTournament />);
     expect(screen.queryByLabelText(/Player/)).toBeNull();
     fireEvent.change(screen.getByLabelText('Tournament title'), { target: { value: 'The autumn league' } });
     fireEvent.click(screen.getByRole('button', { name: /Create tournament/ }));
     await waitFor(() => expect(createLeagueTournamentAction).toHaveBeenCalledWith('The autumn league'));
-    await waitFor(() => expect(push).toHaveBeenCalledWith('/tournaments/new-id'));
+    expect(await screen.findByLabelText('Tournament invite code')).toHaveProperty('value', 'A'.repeat(32));
+    expect(screen.getByRole('link', { name: 'Open tournament' }).getAttribute('href')).toBe('/tournaments/new-id');
   });
 
   it('keeps the form available after a storage failure', async () => {

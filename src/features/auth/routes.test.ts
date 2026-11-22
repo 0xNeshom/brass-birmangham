@@ -44,17 +44,17 @@ describe('authentication callbacks', () => {
     expect(auth.verifyOtp).toHaveBeenCalledWith({ token_hash: 'private-hash', type });
     expect(response.headers.get('location')).toBe('https://league.test/auth/password');
   });
-  it('activates an approved membership only after signup email verification', async () => {
+  it('honors previously issued signup links without granting league access', async () => {
     const response = await confirm(new Request('https://league.test/auth/confirm?token_hash=private-hash&type=signup&next=/dashboard'));
     expect(auth.verifyOtp).toHaveBeenCalledWith({ token_hash: 'private-hash', type: 'signup' });
-    expect(auth.rpc).toHaveBeenCalledWith('activate_verified_membership');
+    expect(auth.rpc).not.toHaveBeenCalled();
     expect(response.headers.get('location')).toBe('https://league.test/dashboard');
   });
-  it('signs out a verified but unapproved user when database activation fails', async () => {
-    auth.rpc.mockResolvedValue({ error: new Error('private database detail') });
+  it('redirects an expired signup link to sign-in', async () => {
+    auth.verifyOtp.mockResolvedValue({ error: new Error('private provider detail') });
     const response = await confirm(new Request('https://league.test/auth/confirm?token_hash=private-hash&type=signup'));
-    expect(auth.signOut).toHaveBeenCalledWith({ scope: 'local' });
-    expect(response.headers.get('location')).toBe('https://league.test/login?error=access');
+    expect(auth.signOut).not.toHaveBeenCalled();
+    expect(response.headers.get('location')).toBe('https://league.test/login?error=link');
     expect(response.headers.get('location')).not.toContain('private');
   });
   it('does not verify unsupported flows or missing codes', async () => {

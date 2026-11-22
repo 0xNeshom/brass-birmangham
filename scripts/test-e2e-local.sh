@@ -1,26 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly project_id='brass-auth-it-4dpoxpp2'
+readonly project_id='brass-invite-it'
 project_dir="${BRASS_E2E_SUPABASE_WORKDIR:-}"
 if [[ -z "$project_dir" ]]; then
-  project_dir="$(cat /tmp/brass-e2e-local-workdir)"
+  printf '%s\n' 'Set BRASS_E2E_SUPABASE_WORKDIR to the disposable brass-invite-it workdir.' >&2
+  exit 1
 fi
 readonly project_dir
-readonly api_url='http://127.0.0.1:54321'
-readonly mailpit_url='http://127.0.0.1:54324'
+readonly api_url='http://127.0.0.1:54351'
 
 config="$project_dir/supabase/config.toml"
 test -f "$config"
 grep -Fq "project_id = \"$project_id\"" "$config"
-grep -Eq '^enable_signup = true$' "$config"
+grep -Eq '^enable_signup = false$' "$config"
 grep -Fq '[auth.hook.before_user_created]' "$config"
 grep -Eq '^enabled = true$' "$config"
 
 status_env="$(npx supabase status --workdir "$project_dir" --output env 2>/dev/null)"
 eval "$status_env"
 test "$API_URL" = "$api_url"
-test "$MAILPIT_URL" = "$mailpit_url"
 
 assert_local_binding() {
   local container="$1" target_port="$2" host_port="$3"
@@ -31,8 +30,7 @@ assert_local_binding() {
   node -e 'const b=JSON.parse(process.argv[1]);if(!Array.isArray(b)||b.length!==1||b[0].HostIp!=="127.0.0.1"||b[0].HostPort!==process.argv[2])process.exit(1)' "$binding" "$host_port"
 }
 
-assert_local_binding "supabase_kong_$project_id" '8000/tcp' '54321'
-assert_local_binding "supabase_inbucket_$project_id" '8025/tcp' '54324'
+assert_local_binding "supabase_kong_$project_id" '8000/tcp' '54351'
 port="${BRASS_E2E_PORT:-3000}"
 if ! [[ "$port" =~ ^[1-9][0-9]{0,4}$ ]] || (( port > 65535 )); then
   printf '%s\n' 'BRASS_E2E_PORT must be a valid port number.' >&2
@@ -58,7 +56,14 @@ export BRASS_E2E_RUN_ID="$(node -e 'process.stdout.write(require("node:crypto").
 export BRASS_ADMIN_EMAIL='brass-e2e-admin@example.test'
 export BRASS_E2E_ADMIN_PASSWORD="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(32).toString("base64url"))')"
 export BRASS_ADMIN_PASSWORD_HASH="$(node -e 'const c=require("node:crypto"),p=process.env.BRASS_E2E_ADMIN_PASSWORD,s=c.randomBytes(16).toString("hex"),h=c.scryptSync(p,s,64,{N:16384,r:8,p:1,maxmem:64*1024*1024}).toString("hex");process.stdout.write(`scrypt$16384$8$1$${s}$${h}`)')"
+# Next expands dollar signs if the same variable is declared in a local dotenv file.
+if ! node -e 'const hash=process.env.BRASS_ADMIN_PASSWORD_HASH;require("@next/env").loadEnvConfig(process.cwd());process.exit(Number(process.env.BRASS_ADMIN_PASSWORD_HASH!==hash))'; then
+  export BRASS_ADMIN_PASSWORD_HASH="${BRASS_ADMIN_PASSWORD_HASH//\$/\\\$}"
+fi
 export BRASS_ADMIN_SESSION_SECRET="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(32).toString("hex"))')"
 
 npm run build
-npm run test:e2e -- tests/e2e/local-player-admin.spec.ts tests/e2e/local-member-journey.spec.ts
+if (( $# == 0 )); then
+  set -- tests/e2e/local-player-admin.spec.ts tests/e2e/local-member-journey.spec.ts
+fi
+npm run test:e2e -- "$@"
