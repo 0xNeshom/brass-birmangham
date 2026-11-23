@@ -1,0 +1,1171 @@
+{
+  "revision": "phase-1.2-proposed",
+  "status": "integrity validated; proposed map coordinates remain provisional",
+  "coordinates": "intentionally absent",
+  "cities": [
+    "ironhaven",
+    "copperfield",
+    "millbrook",
+    "blackridge",
+    "westford",
+    "rivermouth",
+    "foundry-vale",
+    "ashbourne",
+    "greyhaven",
+    "brackenford",
+    "dunmere",
+    "calderwick"
+  ],
+  "regions": {
+    "northern-uplands": [
+      "brackenford",
+      "blackridge",
+      "calderwick"
+    ],
+    "western-textile-district": [
+      "millbrook",
+      "westford"
+    ],
+    "central-industrial-basin": [
+      "ironhaven",
+      "copperfield",
+      "foundry-vale"
+    ],
+    "eastern-canal-district": [
+      "greyhaven",
+      "rivermouth"
+    ],
+    "southern-lowlands": [
+      "dunmere",
+      "ashbourne"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "node-settlement-ironhaven",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-copperfield",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-millbrook",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-blackridge",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-westford",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-rivermouth",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-foundry-vale",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-ashbourne",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-greyhaven",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-brackenford",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-dunmere",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-settlement-calderwick",
+      "kind": "settlement"
+    },
+    {
+      "id": "node-river-source-calder",
+      "kind": "source"
+    },
+    {
+      "id": "node-river-reach-calderwick",
+      "kind": "river-reach",
+      "near_settlement": "node-settlement-calderwick"
+    },
+    {
+      "id": "junction-river-weaver-calder",
+      "kind": "confluence",
+      "near_settlement": "node-settlement-ironhaven"
+    },
+    {
+      "id": "junction-river-mere-calder",
+      "kind": "confluence"
+    },
+    {
+      "id": "node-river-reach-greyhaven",
+      "kind": "river-reach",
+      "near_settlement": "node-settlement-greyhaven"
+    },
+    {
+      "id": "node-river-estuary-rivermouth",
+      "kind": "river-reach",
+      "near_settlement": "node-settlement-rivermouth"
+    },
+    {
+      "id": "node-river-source-weaver",
+      "kind": "source"
+    },
+    {
+      "id": "node-river-reach-millbrook",
+      "kind": "river-reach",
+      "near_settlement": "node-settlement-millbrook"
+    },
+    {
+      "id": "node-river-reach-westford",
+      "kind": "river-reach",
+      "near_settlement": "node-settlement-westford"
+    },
+    {
+      "id": "node-river-source-mere",
+      "kind": "source"
+    },
+    {
+      "id": "node-river-reach-dunmere",
+      "kind": "river-reach",
+      "near_settlement": "node-settlement-dunmere"
+    },
+    {
+      "id": "node-junction-canal-ironhaven-basin",
+      "kind": "canal-junction",
+      "near_settlement": "node-settlement-ironhaven"
+    },
+    {
+      "id": "node-junction-rail-ironhaven",
+      "kind": "rail-junction",
+      "near_settlement": "node-settlement-ironhaven"
+    },
+    {
+      "id": "node-junction-rail-westford",
+      "kind": "rail-junction",
+      "near_settlement": "node-settlement-westford"
+    }
+  ],
+  "corridors": [
+    {
+      "id": "river-calder",
+      "mode": "river",
+      "source": "node-river-source-calder",
+      "destination": "node-river-estuary-rivermouth",
+      "nodes": [
+        "node-river-source-calder",
+        "node-river-reach-calderwick",
+        "junction-river-weaver-calder",
+        "junction-river-mere-calder",
+        "node-river-reach-greyhaven",
+        "node-river-estuary-rivermouth"
+      ],
+      "segments": [
+        "river-calder-01",
+        "river-calder-02",
+        "river-calder-03",
+        "river-calder-04",
+        "river-calder-05"
+      ],
+      "flow": "ordered downstream",
+      "tributaries": [
+        "river-weaver",
+        "river-mere"
+      ],
+      "confluences": [
+        {
+          "id": "junction-river-weaver-calder",
+          "receives": "river-weaver"
+        },
+        {
+          "id": "junction-river-mere-calder",
+          "receives": "river-mere"
+        }
+      ]
+    },
+    {
+      "id": "river-weaver",
+      "mode": "river",
+      "source": "node-river-source-weaver",
+      "destination": "junction-river-weaver-calder",
+      "nodes": [
+        "node-river-source-weaver",
+        "node-river-reach-millbrook",
+        "node-river-reach-westford",
+        "junction-river-weaver-calder"
+      ],
+      "segments": [
+        "river-weaver-01",
+        "river-weaver-02",
+        "river-weaver-03"
+      ],
+      "flow": "ordered downstream",
+      "tributaries": [],
+      "confluences": [
+        {
+          "id": "junction-river-weaver-calder",
+          "joins": "river-calder"
+        }
+      ]
+    },
+    {
+      "id": "river-mere",
+      "mode": "river",
+      "source": "node-river-source-mere",
+      "destination": "junction-river-mere-calder",
+      "nodes": [
+        "node-river-source-mere",
+        "node-river-reach-dunmere",
+        "junction-river-mere-calder"
+      ],
+      "segments": [
+        "river-mere-01",
+        "river-mere-02"
+      ],
+      "flow": "ordered downstream",
+      "tributaries": [],
+      "confluences": [
+        {
+          "id": "junction-river-mere-calder",
+          "joins": "river-calder"
+        }
+      ]
+    },
+    {
+      "id": "canal-weaver",
+      "mode": "canal",
+      "start": "millbrook",
+      "end": "ironhaven",
+      "settlements": [
+        "millbrook",
+        "westford",
+        "ironhaven"
+      ],
+      "segments": [
+        "canal-weaver-01",
+        "canal-weaver-02"
+      ],
+      "nodes": [
+        "node-settlement-millbrook",
+        "node-settlement-westford",
+        "node-junction-canal-ironhaven-basin"
+      ]
+    },
+    {
+      "id": "canal-lower-calder",
+      "mode": "canal",
+      "start": "ironhaven",
+      "end": "rivermouth",
+      "settlements": [
+        "ironhaven",
+        "greyhaven",
+        "rivermouth"
+      ],
+      "segments": [
+        "canal-lower-calder-01",
+        "canal-lower-calder-02"
+      ],
+      "nodes": [
+        "node-junction-canal-ironhaven-basin",
+        "node-settlement-greyhaven",
+        "node-settlement-rivermouth"
+      ]
+    },
+    {
+      "id": "canal-southern",
+      "mode": "canal",
+      "start": "ashbourne",
+      "end": "ironhaven",
+      "settlements": [
+        "ashbourne",
+        "foundry-vale",
+        "ironhaven"
+      ],
+      "segments": [
+        "canal-southern-01",
+        "canal-southern-02"
+      ],
+      "nodes": [
+        "node-settlement-ashbourne",
+        "node-settlement-foundry-vale",
+        "node-junction-canal-ironhaven-basin"
+      ]
+    },
+    {
+      "id": "rail-basin-trunk",
+      "mode": "rail",
+      "start": "westford",
+      "end": "rivermouth",
+      "settlements": [
+        "westford",
+        "ironhaven",
+        "copperfield",
+        "greyhaven",
+        "rivermouth"
+      ],
+      "segments": [
+        "rail-basin-trunk-01",
+        "rail-basin-trunk-02",
+        "rail-basin-trunk-03",
+        "rail-basin-trunk-04"
+      ],
+      "nodes": [
+        "node-junction-rail-westford",
+        "node-junction-rail-ironhaven",
+        "node-settlement-copperfield",
+        "node-settlement-greyhaven",
+        "node-settlement-rivermouth"
+      ]
+    },
+    {
+      "id": "rail-coal-feeder",
+      "mode": "rail",
+      "start": "brackenford",
+      "end": "ironhaven",
+      "settlements": [
+        "brackenford",
+        "blackridge",
+        "calderwick",
+        "ironhaven"
+      ],
+      "segments": [
+        "rail-coal-feeder-01",
+        "rail-coal-feeder-02",
+        "rail-coal-feeder-03"
+      ],
+      "nodes": [
+        "node-settlement-brackenford",
+        "node-settlement-blackridge",
+        "node-settlement-calderwick",
+        "node-junction-rail-ironhaven"
+      ]
+    },
+    {
+      "id": "rail-southern-arc",
+      "mode": "rail",
+      "start": "westford",
+      "end": "ironhaven",
+      "settlements": [
+        "westford",
+        "dunmere",
+        "ashbourne",
+        "foundry-vale",
+        "ironhaven"
+      ],
+      "segments": [
+        "rail-southern-arc-01",
+        "rail-southern-arc-02",
+        "rail-southern-arc-03",
+        "rail-southern-arc-04"
+      ],
+      "nodes": [
+        "node-junction-rail-westford",
+        "node-settlement-dunmere",
+        "node-settlement-ashbourne",
+        "node-settlement-foundry-vale",
+        "node-junction-rail-ironhaven"
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "river-calder-01",
+      "mode": "river",
+      "corridor": "river-calder",
+      "from": "node-river-source-calder",
+      "to": "node-river-reach-calderwick",
+      "directed": true
+    },
+    {
+      "id": "river-calder-02",
+      "mode": "river",
+      "corridor": "river-calder",
+      "from": "node-river-reach-calderwick",
+      "to": "junction-river-weaver-calder",
+      "directed": true
+    },
+    {
+      "id": "river-calder-03",
+      "mode": "river",
+      "corridor": "river-calder",
+      "from": "junction-river-weaver-calder",
+      "to": "junction-river-mere-calder",
+      "directed": true
+    },
+    {
+      "id": "river-calder-04",
+      "mode": "river",
+      "corridor": "river-calder",
+      "from": "junction-river-mere-calder",
+      "to": "node-river-reach-greyhaven",
+      "directed": true
+    },
+    {
+      "id": "river-calder-05",
+      "mode": "river",
+      "corridor": "river-calder",
+      "from": "node-river-reach-greyhaven",
+      "to": "node-river-estuary-rivermouth",
+      "directed": true
+    },
+    {
+      "id": "river-weaver-01",
+      "mode": "river",
+      "corridor": "river-weaver",
+      "from": "node-river-source-weaver",
+      "to": "node-river-reach-millbrook",
+      "directed": true
+    },
+    {
+      "id": "river-weaver-02",
+      "mode": "river",
+      "corridor": "river-weaver",
+      "from": "node-river-reach-millbrook",
+      "to": "node-river-reach-westford",
+      "directed": true
+    },
+    {
+      "id": "river-weaver-03",
+      "mode": "river",
+      "corridor": "river-weaver",
+      "from": "node-river-reach-westford",
+      "to": "junction-river-weaver-calder",
+      "directed": true
+    },
+    {
+      "id": "river-mere-01",
+      "mode": "river",
+      "corridor": "river-mere",
+      "from": "node-river-source-mere",
+      "to": "node-river-reach-dunmere",
+      "directed": true
+    },
+    {
+      "id": "river-mere-02",
+      "mode": "river",
+      "corridor": "river-mere",
+      "from": "node-river-reach-dunmere",
+      "to": "junction-river-mere-calder",
+      "directed": true
+    },
+    {
+      "id": "canal-weaver-01",
+      "mode": "canal",
+      "corridor": "canal-weaver",
+      "from": "node-settlement-millbrook",
+      "to": "node-settlement-westford",
+      "directed": false
+    },
+    {
+      "id": "canal-weaver-02",
+      "mode": "canal",
+      "corridor": "canal-weaver",
+      "from": "node-settlement-westford",
+      "to": "node-junction-canal-ironhaven-basin",
+      "directed": false
+    },
+    {
+      "id": "canal-lower-calder-01",
+      "mode": "canal",
+      "corridor": "canal-lower-calder",
+      "from": "node-junction-canal-ironhaven-basin",
+      "to": "node-settlement-greyhaven",
+      "directed": false
+    },
+    {
+      "id": "canal-lower-calder-02",
+      "mode": "canal",
+      "corridor": "canal-lower-calder",
+      "from": "node-settlement-greyhaven",
+      "to": "node-settlement-rivermouth",
+      "directed": false
+    },
+    {
+      "id": "canal-southern-01",
+      "mode": "canal",
+      "corridor": "canal-southern",
+      "from": "node-settlement-ashbourne",
+      "to": "node-settlement-foundry-vale",
+      "directed": false
+    },
+    {
+      "id": "canal-southern-02",
+      "mode": "canal",
+      "corridor": "canal-southern",
+      "from": "node-settlement-foundry-vale",
+      "to": "node-junction-canal-ironhaven-basin",
+      "directed": false
+    },
+    {
+      "id": "rail-basin-trunk-01",
+      "mode": "rail",
+      "corridor": "rail-basin-trunk",
+      "from": "node-junction-rail-westford",
+      "to": "node-junction-rail-ironhaven",
+      "directed": false
+    },
+    {
+      "id": "rail-basin-trunk-02",
+      "mode": "rail",
+      "corridor": "rail-basin-trunk",
+      "from": "node-junction-rail-ironhaven",
+      "to": "node-settlement-copperfield",
+      "directed": false
+    },
+    {
+      "id": "rail-basin-trunk-03",
+      "mode": "rail",
+      "corridor": "rail-basin-trunk",
+      "from": "node-settlement-copperfield",
+      "to": "node-settlement-greyhaven",
+      "directed": false
+    },
+    {
+      "id": "rail-basin-trunk-04",
+      "mode": "rail",
+      "corridor": "rail-basin-trunk",
+      "from": "node-settlement-greyhaven",
+      "to": "node-settlement-rivermouth",
+      "directed": false
+    },
+    {
+      "id": "rail-coal-feeder-01",
+      "mode": "rail",
+      "corridor": "rail-coal-feeder",
+      "from": "node-settlement-brackenford",
+      "to": "node-settlement-blackridge",
+      "directed": false
+    },
+    {
+      "id": "rail-coal-feeder-02",
+      "mode": "rail",
+      "corridor": "rail-coal-feeder",
+      "from": "node-settlement-blackridge",
+      "to": "node-settlement-calderwick",
+      "directed": false
+    },
+    {
+      "id": "rail-coal-feeder-03",
+      "mode": "rail",
+      "corridor": "rail-coal-feeder",
+      "from": "node-settlement-calderwick",
+      "to": "node-junction-rail-ironhaven",
+      "directed": false
+    },
+    {
+      "id": "rail-southern-arc-01",
+      "mode": "rail",
+      "corridor": "rail-southern-arc",
+      "from": "node-junction-rail-westford",
+      "to": "node-settlement-dunmere",
+      "directed": false
+    },
+    {
+      "id": "rail-southern-arc-02",
+      "mode": "rail",
+      "corridor": "rail-southern-arc",
+      "from": "node-settlement-dunmere",
+      "to": "node-settlement-ashbourne",
+      "directed": false
+    },
+    {
+      "id": "rail-southern-arc-03",
+      "mode": "rail",
+      "corridor": "rail-southern-arc",
+      "from": "node-settlement-ashbourne",
+      "to": "node-settlement-foundry-vale",
+      "directed": false
+    },
+    {
+      "id": "rail-southern-arc-04",
+      "mode": "rail",
+      "corridor": "rail-southern-arc",
+      "from": "node-settlement-foundry-vale",
+      "to": "node-junction-rail-ironhaven",
+      "directed": false
+    }
+  ],
+  "crossings": [
+    {
+      "id": "viaduct-calderwick",
+      "above": "rail-coal-feeder-03",
+      "below": "river-calder-02",
+      "position_description": "Just downstream of Calderwick",
+      "transfer": false,
+      "drawing_code": "V1",
+      "spans": [
+        {
+          "id": "span-viaduct-calderwick-01",
+          "drawing_code": "V1",
+          "position_description": "Just downstream of Calderwick",
+          "structure_id": "viaduct-calderwick",
+          "above": "rail-coal-feeder-03",
+          "below": "river-calder-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "viaduct",
+      "network_junction": false
+    },
+    {
+      "id": "viaduct-ironhaven",
+      "above": "rail-basin-trunk-02",
+      "below": "river-calder-03",
+      "position_description": "East of capital confluence, above the lower floodplain",
+      "transfer": false,
+      "drawing_code": "V2",
+      "spans": [
+        {
+          "id": "span-viaduct-ironhaven-01",
+          "drawing_code": "V2",
+          "position_description": "East of capital confluence, above the lower floodplain",
+          "structure_id": "viaduct-ironhaven",
+          "above": "rail-basin-trunk-02",
+          "below": "river-calder-03",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "viaduct",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-greyhaven-rail",
+      "above": "rail-basin-trunk-03",
+      "below": "canal-lower-calder-01",
+      "position_description": "Western Greyhaven approach",
+      "transfer": false,
+      "drawing_code": "B1",
+      "spans": [
+        {
+          "id": "span-bridge-greyhaven-rail-01",
+          "drawing_code": "B1",
+          "position_description": "Western Greyhaven approach",
+          "structure_id": "bridge-greyhaven-rail",
+          "above": "rail-basin-trunk-03",
+          "below": "canal-lower-calder-01",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-dunmere-rail",
+      "above": "rail-southern-arc-02",
+      "below": "river-mere-02",
+      "position_description": "Two rail spans across the Mere meander immediately east of Dunmere",
+      "transfer": false,
+      "spans": [
+        {
+          "id": "span-bridge-dunmere-rail-01",
+          "drawing_code": "B2a",
+          "position_description": "First Mere crossing on the Dunmere east approach",
+          "structure_id": "bridge-dunmere-rail",
+          "above": "rail-southern-arc-02",
+          "below": "river-mere-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        },
+        {
+          "id": "span-bridge-dunmere-rail-02",
+          "drawing_code": "B2b",
+          "position_description": "Second Mere crossing around the same meander",
+          "structure_id": "bridge-dunmere-rail",
+          "above": "rail-southern-arc-02",
+          "below": "river-mere-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "drawing_code": "B2a/B2b",
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "aqueduct-mere",
+      "above": "canal-lower-calder-01",
+      "below": "river-mere-02",
+      "position_description": "Mere northward bend before its confluence",
+      "transfer": false,
+      "drawing_code": "A1",
+      "spans": [
+        {
+          "id": "span-aqueduct-mere-01",
+          "drawing_code": "A1",
+          "position_description": "Mere northward bend before its confluence",
+          "structure_id": "aqueduct-mere",
+          "above": "canal-lower-calder-01",
+          "below": "river-mere-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "aqueduct",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-westford-weaver-rail",
+      "above": "rail-southern-arc-01",
+      "below": "river-weaver-02",
+      "position_description": "Immediately upstream and west of Westford reach; southern railway leaves north terrace for Dunmere",
+      "transfer": false,
+      "drawing_code": "B3",
+      "spans": [
+        {
+          "id": "span-bridge-westford-weaver-rail-01",
+          "drawing_code": "B3",
+          "position_description": "Immediately upstream and west of Westford reach; southern railway leaves north terrace for Dunmere",
+          "structure_id": "bridge-westford-weaver-rail",
+          "above": "rail-southern-arc-01",
+          "below": "river-weaver-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-mere-trunk",
+      "above": "rail-basin-trunk-03",
+      "below": "river-mere-02",
+      "position_description": "Eastern trunk crosses north-turning Mere south of its Calder confluence",
+      "transfer": false,
+      "drawing_code": "B4",
+      "spans": [
+        {
+          "id": "span-bridge-mere-trunk-01",
+          "drawing_code": "B4",
+          "position_description": "Eastern trunk crosses north-turning Mere south of its Calder confluence",
+          "structure_id": "bridge-mere-trunk",
+          "above": "rail-basin-trunk-03",
+          "below": "river-mere-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-westford-calder-trunk",
+      "drawing_code": "B5",
+      "above": "rail-basin-trunk-01",
+      "below": "river-calder-02",
+      "position_description": "Western capital trunk approach crosses Calder before the confluence",
+      "transfer": false,
+      "spans": [
+        {
+          "id": "span-bridge-westford-calder-trunk-01",
+          "drawing_code": "B5",
+          "position_description": "Western capital trunk approach crosses Calder before the confluence",
+          "structure_id": "bridge-westford-calder-trunk",
+          "above": "rail-basin-trunk-01",
+          "below": "river-calder-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-capital-calder-feeder",
+      "drawing_code": "B6",
+      "above": "rail-coal-feeder-03",
+      "below": "river-calder-02",
+      "position_description": "Northern capital rail approach crosses Calder after the Calderwick viaduct",
+      "transfer": false,
+      "spans": [
+        {
+          "id": "span-bridge-capital-calder-feeder-01",
+          "drawing_code": "B6",
+          "position_description": "Northern capital rail approach crosses Calder after the Calderwick viaduct",
+          "structure_id": "bridge-capital-calder-feeder",
+          "above": "rail-coal-feeder-03",
+          "below": "river-calder-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-capital-weaver-southern",
+      "drawing_code": "B7",
+      "above": "rail-southern-arc-04",
+      "below": "river-weaver-03",
+      "position_description": "Southern capital rail approach spans Weaver before the confluence",
+      "transfer": false,
+      "spans": [
+        {
+          "id": "span-bridge-capital-weaver-southern-01",
+          "drawing_code": "B7",
+          "position_description": "Southern capital rail approach spans Weaver before the confluence",
+          "structure_id": "bridge-capital-weaver-southern",
+          "above": "rail-southern-arc-04",
+          "below": "river-weaver-03",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-westford-canal-southern",
+      "drawing_code": "B8",
+      "above": "rail-southern-arc-01",
+      "below": "canal-weaver-01",
+      "position_description": "Southern line crosses Weaver Navigation on leaving Westford",
+      "transfer": false,
+      "spans": [
+        {
+          "id": "span-bridge-westford-canal-southern-01",
+          "drawing_code": "B8",
+          "position_description": "Southern line crosses Weaver Navigation on leaving Westford",
+          "structure_id": "bridge-westford-canal-southern",
+          "above": "rail-southern-arc-01",
+          "below": "canal-weaver-01",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    },
+    {
+      "id": "bridge-capital-canal-southern",
+      "drawing_code": "B9",
+      "above": "rail-southern-arc-04",
+      "below": "canal-weaver-02",
+      "position_description": "Southern capital rail approach spans western canal arm",
+      "transfer": false,
+      "spans": [
+        {
+          "id": "span-bridge-capital-canal-southern-01",
+          "drawing_code": "B9",
+          "position_description": "Southern capital rail approach spans western canal arm",
+          "structure_id": "bridge-capital-canal-southern",
+          "above": "rail-southern-arc-04",
+          "below": "canal-weaver-02",
+          "physical_crossing": true,
+          "network_transfer": false
+        }
+      ],
+      "structure_kind": "bridge",
+      "network_junction": false
+    }
+  ],
+  "infrastructure": [
+    {
+      "id": "lock-weaver-flight",
+      "kind": "lock-flight",
+      "on_segment": "canal-weaver-01",
+      "position_description": "Below Millbrook millpond reach, before Westford",
+      "level_direction": "descends toward Westford"
+    },
+    {
+      "id": "lock-foundry-flight",
+      "kind": "lock-flight",
+      "on_segment": "canal-southern-02",
+      "position_description": "Between Foundry Vale upper pound and capital basin",
+      "level_direction": "descends toward Ironhaven"
+    },
+    {
+      "id": "lock-greyhaven-control",
+      "kind": "lock",
+      "on_segment": "canal-lower-calder-02",
+      "position_description": "Immediately east of Greyhaven warehouse basin",
+      "level_direction": "controls lower cut level"
+    },
+    {
+      "id": "lock-rivermouth-sea",
+      "kind": "interface-lock",
+      "from_corridor": "canal-lower-calder",
+      "at_settlement": "rivermouth",
+      "to_node": "node-river-estuary-rivermouth",
+      "position_description": "Between sheltered dock basin and tidal inlet",
+      "node_id": "node-settlement-rivermouth",
+      "from_node": "node-settlement-rivermouth"
+    },
+    {
+      "id": "lock-ironhaven-river",
+      "kind": "interface-lock",
+      "from_corridors": [
+        "canal-weaver",
+        "canal-lower-calder",
+        "canal-southern"
+      ],
+      "at_settlement": "ironhaven",
+      "to_node": "junction-river-weaver-calder",
+      "position_description": "Proposed basin outlet to the Calder at the Weaver\u2013Calder confluence node; whether the lock should sit on this node or immediately downstream remains unresolved for owner review.",
+      "node_id": "node-settlement-ironhaven",
+      "from_node": "node-junction-canal-ironhaven-basin",
+      "open_question": "Should the river interface be at the confluence node or at a new downstream Calder reach? No downstream node is added until approved."
+    },
+    {
+      "id": "bridge-weaver-towpath",
+      "kind": "towpath-bridge",
+      "on_segment": "canal-weaver-01",
+      "position_description": "Millbrook approach, pedestrian towpath over a local feeder stream",
+      "transfer": false,
+      "crosses_feature": "feature-local-mill-feeder",
+      "network_transfer": false
+    },
+    {
+      "id": "reservoir-foundry",
+      "kind": "water-supply",
+      "feeds_corridor": "canal-southern",
+      "position_description": "Southern hillside above Foundry Vale\u2013Ashbourne pound",
+      "drainage": "spillway returns downhill to the basin, separate from navigable topology"
+    },
+    {
+      "id": "station-ashbourne",
+      "kind": "station",
+      "at_settlement": "ashbourne",
+      "node_id": "node-settlement-ashbourne"
+    },
+    {
+      "id": "station-blackridge",
+      "kind": "station",
+      "at_settlement": "blackridge",
+      "node_id": "node-settlement-blackridge"
+    },
+    {
+      "id": "station-brackenford",
+      "kind": "station",
+      "at_settlement": "brackenford",
+      "node_id": "node-settlement-brackenford"
+    },
+    {
+      "id": "station-calderwick",
+      "kind": "station",
+      "at_settlement": "calderwick",
+      "node_id": "node-settlement-calderwick"
+    },
+    {
+      "id": "station-copperfield",
+      "kind": "station",
+      "at_settlement": "copperfield",
+      "node_id": "node-settlement-copperfield"
+    },
+    {
+      "id": "station-dunmere",
+      "kind": "station",
+      "at_settlement": "dunmere",
+      "node_id": "node-settlement-dunmere"
+    },
+    {
+      "id": "station-foundry-vale",
+      "kind": "station",
+      "at_settlement": "foundry-vale",
+      "node_id": "node-settlement-foundry-vale"
+    },
+    {
+      "id": "station-greyhaven",
+      "kind": "station",
+      "at_settlement": "greyhaven",
+      "node_id": "node-settlement-greyhaven"
+    },
+    {
+      "id": "station-ironhaven",
+      "kind": "station",
+      "at_settlement": "ironhaven",
+      "node_id": "node-junction-rail-ironhaven"
+    },
+    {
+      "id": "station-rivermouth",
+      "kind": "station",
+      "at_settlement": "rivermouth",
+      "node_id": "node-settlement-rivermouth"
+    },
+    {
+      "id": "station-westford",
+      "kind": "station",
+      "at_settlement": "westford",
+      "node_id": "node-junction-rail-westford"
+    },
+    {
+      "id": "junction-canal-ironhaven-basin",
+      "kind": "canal-junction",
+      "at_settlement": "ironhaven",
+      "node_id": "node-junction-canal-ironhaven-basin",
+      "incident_segments": [
+        "canal-weaver-02",
+        "canal-lower-calder-01",
+        "canal-southern-02"
+      ]
+    },
+    {
+      "id": "basin-westford",
+      "kind": "canal-basin",
+      "at_settlement": "westford",
+      "node_id": "node-settlement-westford"
+    },
+    {
+      "id": "basin-greyhaven",
+      "kind": "canal-basin",
+      "at_settlement": "greyhaven",
+      "node_id": "node-settlement-greyhaven"
+    },
+    {
+      "id": "basin-ashbourne",
+      "kind": "canal-terminal",
+      "at_settlement": "ashbourne",
+      "node_id": "node-settlement-ashbourne"
+    },
+    {
+      "id": "junction-rail-ironhaven",
+      "kind": "rail-junction",
+      "at_settlement": "ironhaven",
+      "node_id": "node-junction-rail-ironhaven",
+      "incident_segments": [
+        "rail-basin-trunk-01",
+        "rail-coal-feeder-03",
+        "rail-southern-arc-04"
+      ]
+    },
+    {
+      "id": "junction-rail-westford",
+      "kind": "rail-junction",
+      "at_settlement": "westford",
+      "node_id": "node-junction-rail-westford",
+      "incident_segments": [
+        "rail-basin-trunk-01",
+        "rail-southern-arc-01"
+      ]
+    },
+    {
+      "id": "basin-ironhaven",
+      "kind": "canal-basin",
+      "at_settlement": "ironhaven",
+      "node_id": "node-junction-canal-ironhaven-basin"
+    }
+  ],
+  "freight_interchanges": [
+    {
+      "id": "transfer-westford",
+      "at_settlement": "westford",
+      "modes": [
+        "rail",
+        "canal"
+      ],
+      "kind": "quay-to-yard freight handling",
+      "through_vehicle_connection": false,
+      "node_id": "node-settlement-westford"
+    },
+    {
+      "id": "transfer-ironhaven",
+      "at_settlement": "ironhaven",
+      "modes": [
+        "rail",
+        "canal"
+      ],
+      "kind": "quay-to-yard freight handling",
+      "through_vehicle_connection": false,
+      "node_id": "node-settlement-ironhaven"
+    },
+    {
+      "id": "transfer-foundry-vale",
+      "at_settlement": "foundry-vale",
+      "modes": [
+        "rail",
+        "canal"
+      ],
+      "kind": "quay-to-yard freight handling",
+      "through_vehicle_connection": false,
+      "node_id": "node-settlement-foundry-vale"
+    },
+    {
+      "id": "transfer-ashbourne",
+      "at_settlement": "ashbourne",
+      "modes": [
+        "rail",
+        "canal"
+      ],
+      "kind": "quay-to-yard freight handling",
+      "through_vehicle_connection": false,
+      "node_id": "node-settlement-ashbourne"
+    },
+    {
+      "id": "transfer-greyhaven",
+      "at_settlement": "greyhaven",
+      "modes": [
+        "rail",
+        "canal"
+      ],
+      "kind": "quay-to-yard freight handling",
+      "through_vehicle_connection": false,
+      "node_id": "node-settlement-greyhaven"
+    },
+    {
+      "id": "transfer-rivermouth",
+      "at_settlement": "rivermouth",
+      "modes": [
+        "rail",
+        "canal"
+      ],
+      "kind": "quay-to-yard freight handling",
+      "through_vehicle_connection": false,
+      "node_id": "node-settlement-rivermouth"
+    }
+  ],
+  "identifier_policy": "Every network node, corridor, segment, crossing structure, physical span, lock, station, junction, basin, transfer and other infrastructure record has a globally unique stable ID. Display codes and names are labels only.",
+  "features": [
+    {
+      "id": "feature-local-mill-feeder",
+      "kind": "local-stream",
+      "status": "named local feature; not an intercity network node or segment",
+      "connects_networks": false
+    }
+  ],
+  "settlement_nodes": {
+    "ironhaven": "node-settlement-ironhaven",
+    "copperfield": "node-settlement-copperfield",
+    "millbrook": "node-settlement-millbrook",
+    "blackridge": "node-settlement-blackridge",
+    "westford": "node-settlement-westford",
+    "rivermouth": "node-settlement-rivermouth",
+    "foundry-vale": "node-settlement-foundry-vale",
+    "ashbourne": "node-settlement-ashbourne",
+    "greyhaven": "node-settlement-greyhaven",
+    "brackenford": "node-settlement-brackenford",
+    "dunmere": "node-settlement-dunmere",
+    "calderwick": "node-settlement-calderwick"
+  },
+  "validation_policy": {
+    "global_entity_id_scope": [
+      "nodes",
+      "corridors",
+      "segments",
+      "crossings",
+      "crossing spans",
+      "infrastructure",
+      "freight interchanges",
+      "features"
+    ],
+    "references_are_ids": true,
+    "drawing_codes_are_labels": true,
+    "coordinates": "illustration-only; canonical coordinates await owner approval"
+  },
+  "topology_notes": [
+    "Rail junctions and the Ironhaven canal basin are distinct graph nodes colocated by their settlement references; shared node IDs, not visual proximity, create continuity.",
+    "The city anchor and a transport junction are not interchangeable. Route segments terminate at the registered junction node where applicable.",
+    "The towpath bridge crosses a named local stream feature that is excluded from intercity river topology."
+  ]
+}

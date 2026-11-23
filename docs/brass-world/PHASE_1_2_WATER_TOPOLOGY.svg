@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1700" viewBox="0 0 1800 1700">
+<rect width="100%" height="100%" fill="#e5d6b7"/>
+<style>text{font-family:Georgia,serif;fill:#292a27}.small{font:14px Arial,sans-serif}.id{font:11px Arial,sans-serif;fill:#594f42}.edge{font:13px Arial,sans-serif}</style>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#607e86"/></marker></defs>
+<text x="42" y="48" font-size="30">The Calder Marches · River and canal topology</text>
+<text x="42" y="78" class="small">Stable node and segment IDs · exact logical endpoints · schematic rows have no map coordinates</text>
+<text x="42" y="110" font-size="19" fill="#607e86">RIVER · river-calder</text>
+<path d="M120.0 145 H416.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="268.0" y="135" text-anchor="middle" class="edge">river-calder-01</text>
+<path d="M436.0 145 H732.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="584.0" y="135" text-anchor="middle" class="edge">river-calder-02</text>
+<path d="M752.0 145 H1048.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="900.0" y="135" text-anchor="middle" class="edge">river-calder-03</text>
+<path d="M1068.0 145 H1364.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="1216.0" y="135" text-anchor="middle" class="edge">river-calder-04</text>
+<path d="M1384.0 145 H1680.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="1532.0" y="135" text-anchor="middle" class="edge">river-calder-05</text>
+<circle cx="110.0" cy="145" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="110.0" y="176" text-anchor="middle" font-size="15">source</text>
+<text x="110.0" y="193" text-anchor="middle" class="id">node-river-source-calder</text>
+<circle cx="426.0" cy="145" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="426.0" y="176" text-anchor="middle" font-size="15">Calderwick river reach</text>
+<text x="426.0" y="193" text-anchor="middle" class="id">node-river-reach-calderwick</text>
+<circle cx="742.0" cy="145" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="742.0" y="176" text-anchor="middle" font-size="15">Ironhaven confluence</text>
+<text x="742.0" y="193" text-anchor="middle" class="id">junction-river-weaver-calder</text>
+<circle cx="1058.0" cy="145" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="1058.0" y="176" text-anchor="middle" font-size="15">confluence</text>
+<text x="1058.0" y="193" text-anchor="middle" class="id">junction-river-mere-calder</text>
+<circle cx="1374.0" cy="145" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="1374.0" y="176" text-anchor="middle" font-size="15">Greyhaven river reach</text>
+<text x="1374.0" y="193" text-anchor="middle" class="id">node-river-reach-greyhaven</text>
+<circle cx="1690.0" cy="145" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="1690.0" y="176" text-anchor="middle" font-size="15">Rivermouth river reach</text>
+<text x="1690.0" y="193" text-anchor="middle" class="id">node-river-estuary-rivermouth</text>
+<text x="42" y="315" font-size="19" fill="#607e86">RIVER · river-weaver</text>
+<path d="M120.0 350 H626.7" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="373.3" y="340" text-anchor="middle" class="edge">river-weaver-01</text>
+<path d="M646.7 350 H1153.3" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="900.0" y="340" text-anchor="middle" class="edge">river-weaver-02</text>
+<path d="M1173.3 350 H1680.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="1426.7" y="340" text-anchor="middle" class="edge">river-weaver-03</text>
+<circle cx="110.0" cy="350" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="110.0" y="381" text-anchor="middle" font-size="15">source</text>
+<text x="110.0" y="398" text-anchor="middle" class="id">node-river-source-weaver</text>
+<circle cx="636.7" cy="350" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="636.7" y="381" text-anchor="middle" font-size="15">Millbrook river reach</text>
+<text x="636.7" y="398" text-anchor="middle" class="id">node-river-reach-millbrook</text>
+<circle cx="1163.3" cy="350" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="1163.3" y="381" text-anchor="middle" font-size="15">Westford river reach</text>
+<text x="1163.3" y="398" text-anchor="middle" class="id">node-river-reach-westford</text>
+<circle cx="1690.0" cy="350" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="1690.0" y="381" text-anchor="middle" font-size="15">Ironhaven confluence</text>
+<text x="1690.0" y="398" text-anchor="middle" class="id">junction-river-weaver-calder</text>
+<text x="42" y="520" font-size="19" fill="#607e86">RIVER · river-mere</text>
+<path d="M120.0 555 H890.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="505.0" y="545" text-anchor="middle" class="edge">river-mere-01</text>
+<path d="M910.0 555 H1680.0" stroke="#607e86" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="1295.0" y="545" text-anchor="middle" class="edge">river-mere-02</text>
+<circle cx="110.0" cy="555" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="110.0" y="586" text-anchor="middle" font-size="15">source</text>
+<text x="110.0" y="603" text-anchor="middle" class="id">node-river-source-mere</text>
+<circle cx="900.0" cy="555" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="900.0" y="586" text-anchor="middle" font-size="15">Dunmere river reach</text>
+<text x="900.0" y="603" text-anchor="middle" class="id">node-river-reach-dunmere</text>
+<circle cx="1690.0" cy="555" r="9" fill="#e5d6b7" stroke="#607e86" stroke-width="3"/>
+<text x="1690.0" y="586" text-anchor="middle" font-size="15">confluence</text>
+<text x="1690.0" y="603" text-anchor="middle" class="id">junction-river-mere-calder</text>
+<text x="42" y="725" font-size="19" fill="#315d5b">CANAL · canal-weaver</text>
+<path d="M120.0 760 H890.0" stroke="#315d5b" stroke-width="4" fill="none" stroke-dasharray="10 7"/>
+<text x="505.0" y="750" text-anchor="middle" class="edge">canal-weaver-01</text>
+<path d="M910.0 760 H1680.0" stroke="#315d5b" stroke-width="4" fill="none" stroke-dasharray="10 7"/>
+<text x="1295.0" y="750" text-anchor="middle" class="edge">canal-weaver-02</text>
+<circle cx="110.0" cy="760" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="110.0" y="791" text-anchor="middle" font-size="15">Millbrook</text>
+<text x="110.0" y="808" text-anchor="middle" class="id">node-settlement-millbrook</text>
+<circle cx="900.0" cy="760" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="900.0" y="791" text-anchor="middle" font-size="15">Westford</text>
+<text x="900.0" y="808" text-anchor="middle" class="id">node-settlement-westford</text>
+<circle cx="1690.0" cy="760" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="1690.0" y="791" text-anchor="middle" font-size="15">Ironhaven canal junction</text>
+<text x="1690.0" y="808" text-anchor="middle" class="id">node-junction-canal-ironhaven-basin</text>
+<text x="42" y="930" font-size="19" fill="#315d5b">CANAL · canal-lower-calder</text>
+<path d="M120.0 965 H890.0" stroke="#315d5b" stroke-width="4" fill="none" stroke-dasharray="10 7"/>
+<text x="505.0" y="955" text-anchor="middle" class="edge">canal-lower-calder-01</text>
+<path d="M910.0 965 H1680.0" stroke="#315d5b" stroke-width="4" fill="none" stroke-dasharray="10 7"/>
+<text x="1295.0" y="955" text-anchor="middle" class="edge">canal-lower-calder-02</text>
+<circle cx="110.0" cy="965" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="110.0" y="996" text-anchor="middle" font-size="15">Ironhaven canal junction</text>
+<text x="110.0" y="1013" text-anchor="middle" class="id">node-junction-canal-ironhaven-basin</text>
+<circle cx="900.0" cy="965" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="900.0" y="996" text-anchor="middle" font-size="15">Greyhaven</text>
+<text x="900.0" y="1013" text-anchor="middle" class="id">node-settlement-greyhaven</text>
+<circle cx="1690.0" cy="965" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="1690.0" y="996" text-anchor="middle" font-size="15">Rivermouth</text>
+<text x="1690.0" y="1013" text-anchor="middle" class="id">node-settlement-rivermouth</text>
+<text x="42" y="1135" font-size="19" fill="#315d5b">CANAL · canal-southern</text>
+<path d="M120.0 1170 H890.0" stroke="#315d5b" stroke-width="4" fill="none" stroke-dasharray="10 7"/>
+<text x="505.0" y="1160" text-anchor="middle" class="edge">canal-southern-01</text>
+<path d="M910.0 1170 H1680.0" stroke="#315d5b" stroke-width="4" fill="none" stroke-dasharray="10 7"/>
+<text x="1295.0" y="1160" text-anchor="middle" class="edge">canal-southern-02</text>
+<circle cx="110.0" cy="1170" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="110.0" y="1201" text-anchor="middle" font-size="15">Ashbourne</text>
+<text x="110.0" y="1218" text-anchor="middle" class="id">node-settlement-ashbourne</text>
+<circle cx="900.0" cy="1170" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="900.0" y="1201" text-anchor="middle" font-size="15">Foundry Vale</text>
+<text x="900.0" y="1218" text-anchor="middle" class="id">node-settlement-foundry-vale</text>
+<circle cx="1690.0" cy="1170" r="9" fill="#e5d6b7" stroke="#315d5b" stroke-width="3"/>
+<text x="1690.0" y="1201" text-anchor="middle" font-size="15">Ironhaven canal junction</text>
+<text x="1690.0" y="1218" text-anchor="middle" class="id">node-junction-canal-ironhaven-basin</text>
+<text x="42" y="1363" font-size="20">Interfaces, locks and transfer semantics</text>
+<text x="55" y="1395" class="small">lock-weaver-flight · canal-weaver-01 · Below Millbrook millpond reach, before Westford</text>
+<text x="55" y="1422" class="small">lock-foundry-flight · canal-southern-02 · Between Foundry Vale upper pound and capital basin</text>
+<text x="55" y="1449" class="small">lock-greyhaven-control · canal-lower-calder-02 · Immediately east of Greyhaven warehouse basin</text>
+<text x="55" y="1476" class="small">lock-rivermouth-sea · canal-lower-calder · Between sheltered dock basin and tidal inlet</text>
+<text x="55" y="1503" class="small">lock-ironhaven-river · canal interface · Proposed basin outlet to the Calder at the Weaver–Calder confluence node; whether the lock should sit on this node or immediately downstream remains unresolved for owner review.</text>
+<text x="42" y="1525" class="small">Rail/canal freight handling is registered separately; river proximity does not create navigation links.</text>
+<text x="42" y="1554" class="small">Coordinates remain provisional. Shared endpoint node IDs represent logical continuity; no proximity-derived links.</text>
+</svg>

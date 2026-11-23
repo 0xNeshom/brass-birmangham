@@ -77,7 +77,9 @@ function Batch({ pieces, cylinder = false, luminous = false }: { pieces: Piece[]
   </instancedMesh>;
 }
 
-function City({ running }: { running: boolean }) {
+export type FocusedAsset = 'barrel' | 'coal' | 'iron';
+
+function City({ running, focus }: { running: boolean; focus: FocusedAsset }) {
   const city = useMemo(() => makeCity(), []);
   const model = useRef<Group>(null);
   const phase = useRef(0);
@@ -108,12 +110,29 @@ function City({ running }: { running: boolean }) {
   return <group ref={model}>
     <Batch pieces={city.blocks} /><Batch pieces={city.chimneys} cylinder /><Batch pieces={city.windows} luminous /><Batch pieces={city.sleepers} />
     <mesh position={[0, -.12, 2.45]} receiveShadow><boxGeometry args={[14, .12, 1.8]} /><meshStandardMaterial color="#668f92" roughness={.4} metalness={.35} /></mesh>
+    <group position={[-4.6, .43, 2.15]} scale={focus === 'barrel' ? 1.2 : 1}>
+      {[-.55, .12, .79].map((x) => <group key={x} position={[x, 0, 0]}>
+        <mesh castShadow position={[0, .02, 0]}><cylinderGeometry args={[.29, .32, .78, 12]} /><meshStandardMaterial color="#80563b" roughness={.9} emissive={focus === 'barrel' ? '#a66a32' : '#000000'} emissiveIntensity={focus === 'barrel' ? .7 : 0} /></mesh>
+        {[-.25, .25].map((y) => <mesh key={y} rotation={[Math.PI / 2, 0, 0]} position={[0, y, 0]}><torusGeometry args={[.3, .035, 6, 14]} /><meshStandardMaterial color="#bd9657" metalness={.65} roughness={.45} emissive={focus === 'barrel' ? '#c28535' : '#000000'} emissiveIntensity={focus === 'barrel' ? .5 : 0} /></mesh>)}
+      </group>)}
+    </group>
+    <pointLight position={[-4.6, 2, 2.1]} color="#d69d53" intensity={focus === 'barrel' ? 5 : .25} distance={5} />
+    <group position={[2.05, .35, 2.4]} scale={focus === 'coal' ? 1.18 : 1}>
+      <mesh castShadow position={[0, .08, 0]}><boxGeometry args={[1.45, .18, .82]} /><meshStandardMaterial color="#544b3b" /></mesh>
+      {[-.48, .48].map((x) => <mesh key={x} position={[x, -.07, .48]} rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[.22, .22, .1, 12]} /><meshStandardMaterial color="#211f1a" /></mesh>)}
+      {[-.25, 0, .25].map((x, i) => <mesh key={x} castShadow position={[x, .36 + (i === 1 ? .12 : 0), 0]}><dodecahedronGeometry args={[.27, 0]} /><meshStandardMaterial color="#262720" roughness={1} emissive={focus === 'coal' ? '#8d6c36' : '#000000'} emissiveIntensity={focus === 'coal' ? .35 : 0} /></mesh>)}
+    </group>
+    <pointLight position={[2, 1.4, 2.2]} color="#c59754" intensity={focus === 'coal' ? 4 : .2} distance={4} />
+    <group position={[5.1, .26, -2.8]} scale={focus === 'iron' ? 1.2 : 1}>
+      {[-.28, 0, .28].map((x) => <mesh key={x} castShadow position={[x, .05 + (x === 0 ? .13 : 0), 0]}><boxGeometry args={[.42, .18, .62]} /><meshStandardMaterial color="#69706a" metalness={.72} roughness={.34} emissive={focus === 'iron' ? '#84906f' : '#000000'} emissiveIntensity={focus === 'iron' ? .55 : 0} /></mesh>)}
+    </group>
+    <pointLight position={[5, 1.2, -2.8]} color="#bbc19c" intensity={focus === 'iron' ? 4 : .2} distance={3.5} />
     <mesh position={[3.4, .85, .2]} rotation={[0, Math.PI / 2, 0]} castShadow><torusGeometry args={[.7, .1, 6, 18]} /><meshStandardMaterial color="#bb9657" roughness={.5} metalness={.6} /></mesh>
     <mesh position={[3.4, .85, .2]} rotation={[0, Math.PI / 2, 0]}><cylinderGeometry args={[.16, .16, .9, 8]} /><meshStandardMaterial color="#a87550" roughness={.6} metalness={.45} /></mesh>
   </group>;
 }
 
-export default function IndustrialCanvas({ running, mobile, onFailure, onReady }: { running: boolean; mobile: boolean; onFailure: () => void; onReady: () => void }) {
+export default function IndustrialCanvas({ running, mobile, focus, onFailure, onReady }: { running: boolean; mobile: boolean; focus: FocusedAsset; onFailure: () => void; onReady: () => void }) {
   const [lowQuality, setLowQuality] = useState(false);
   const shadows = !mobile && !lowQuality;
   return <Canvas orthographic camera={{ position: [11, 8.5, 12], zoom: mobile ? 26 : 35, near: .1, far: 80 }}
@@ -127,7 +146,7 @@ export default function IndustrialCanvas({ running, mobile, onFailure, onReady }
     <ambientLight intensity={1.1} color="#c4c4b0" />
     <hemisphereLight args={['#e9d2a4', '#343d32', 1.5]} />
     <directionalLight position={[-3, 9, 5]} intensity={3.1} color="#ffda9c" castShadow={shadows} shadow-mapSize={[1024, 1024]} shadow-camera-left={-10} shadow-camera-right={10} shadow-camera-top={8} shadow-camera-bottom={-8} shadow-normalBias={.06} />
-    <City running={running} />
+    <City running={running} focus={focus} />
     <AdaptiveDpr />
     <PerformanceMonitor onDecline={() => setLowQuality(true)} />
   </Canvas>;

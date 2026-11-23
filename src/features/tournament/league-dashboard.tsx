@@ -8,6 +8,7 @@ import { LedgerError } from '@/lib/errors';
 import type { ActionResult } from '@/lib/errors';
 import { joinTournamentRosterAction, leaveTournamentRosterAction, saveLeagueResultAction, selectMatchParticipantsAction, setMemberProfileAction } from '@/lib/actions';
 import { useTournament } from './provider';
+import { MatchRail } from './match-rail';
 import './league-dashboard.css';
 
 export function LeagueTournamentDashboard({ currentUserId, initialDisplayName }: { currentUserId: string; initialDisplayName: string | null }) {
@@ -74,6 +75,8 @@ export function LeagueTournamentDashboard({ currentUserId, initialDisplayName }:
     {(error || failure) && <p className="error-message" role="alert">{failure || error}</p>}
     {message && <p className="league-status" role="status">{message}</p>}
 
+    <MatchRail matches={tournament.matches} targetPrefix="league-match" />
+
     <section className="panel league-profile"><div><p className="eyebrow">Your global profile</p><h2>{displayName || 'Set your display name'}</h2><p>This name is used when you join tournament rosters.</p></div>
       <form onSubmit={saveProfile}><label htmlFor="league-display-name">Display name</label><input id="league-display-name" value={profileDraft} maxLength={40} required onChange={(event) => setProfileDraft(event.target.value)} /><button className="button" disabled={!!busy}>{busy === 'profile' ? 'Saving…' : 'Save profile'}</button></form>
     </section>
@@ -99,7 +102,7 @@ export function LeagueTournamentDashboard({ currentUserId, initialDisplayName }:
         const options = activeRoster.filter((player) => selected.includes(player.slot));
         const rankingIsComplete = ranked.length === 4 && new Set(ranked).size === 4
           && ranked.every((slot) => options.some((player) => player.slot === slot));
-        return <article className="panel league-match" key={match.number}>
+        return <article className="panel league-match" id={`league-match-${match.number}`} key={match.number}>
           <header><div><p className="eyebrow">Match {String(match.number).padStart(2, '0')}{isNext ? ' · Next up' : ''}</p><h3>{match.placements ? 'Result recorded' : 'Awaiting result'}</h3></div><strong>{match.placements ? 'Saved' : isNext ? 'Ready' : 'Upcoming'}</strong></header>
           {!match.placements && <fieldset disabled={!!busy}>
             <legend>Select exactly four roster members</legend>

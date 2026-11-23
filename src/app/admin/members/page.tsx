@@ -19,7 +19,7 @@ export default async function AdminMembersPage({ searchParams }: { searchParams:
 
   return <main className="content-shell">
     <header className="page-header">
-      <div><p className="eyebrow">BRASS LEAGUE ADMIN</p><h1>Member access</h1><p>Signed in as {email}. {activeCount} active member{activeCount === 1 ? '' : 's'}.</p></div>
+      <div><p className="eyebrow">BRASS LEAGUE ADMIN</p><h1>Member access</h1><p>Signed in as <bdi dir="ltr">{email}</bdi>. {activeCount.toLocaleString('en-GB')} active member{activeCount === 1 ? '' : 's'}.</p></div>
       <form action={logoutAdmin}><button className="button secondary">Sign out</button></form>
     </header>
     {updated && <p role="status">Member access revoked.</p>}
@@ -49,7 +49,7 @@ export default async function AdminMembersPage({ searchParams }: { searchParams:
         <thead><tr><th>Member</th><th>Email</th><th>Status</th><th>Action</th></tr></thead>
         <tbody>{memberships.map((member) => <tr key={member.user_id}>
           <td>{member.display_name ?? 'Profile not set'}</td>
-          <td>{member.email ?? member.user_id}</td>
+          <td><bdi dir="ltr">{member.email ?? member.user_id}</bdi></td>
           <td>{member.status}</td>
           <td>{member.status === 'active' && <form action={revokeLeagueMember}>
             <input type="hidden" name="userId" value={member.user_id} />

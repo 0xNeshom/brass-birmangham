@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1240" viewBox="0 0 1800 1240">
+<rect width="100%" height="100%" fill="#e5d6b7"/>
+<style>text{font-family:Georgia,serif;fill:#292a27}.small{font:14px Arial,sans-serif}.id{font:11px Arial,sans-serif;fill:#594f42}.edge{font:13px Arial,sans-serif}</style>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#607e86"/></marker></defs>
+<text x="42" y="48" font-size="30">The Calder Marches · Railway topology</text>
+<text x="42" y="78" class="small">Three explicit corridors · stable segment and node IDs · line crossings remain grade-separated unless marked as a junction</text>
+<text x="42" y="118" font-size="19" fill="#694830">rail-basin-trunk</text>
+<path d="M120.0 160 H495.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="307.5" y="150" text-anchor="middle" class="edge">rail-basin-trunk-01</text>
+<path d="M515.0 160 H890.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="702.5" y="150" text-anchor="middle" class="edge">rail-basin-trunk-02</text>
+<path d="M910.0 160 H1285.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="1097.5" y="150" text-anchor="middle" class="edge">rail-basin-trunk-03</text>
+<path d="M1305.0 160 H1680.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="1492.5" y="150" text-anchor="middle" class="edge">rail-basin-trunk-04</text>
+<circle cx="110.0" cy="160" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="110.0" y="191" text-anchor="middle" font-size="15">Westford rail junction</text>
+<text x="110.0" y="208" text-anchor="middle" class="id">node-junction-rail-westford</text>
+<circle cx="505.0" cy="160" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="505.0" y="191" text-anchor="middle" font-size="15">Ironhaven rail junction</text>
+<text x="505.0" y="208" text-anchor="middle" class="id">node-junction-rail-ironhaven</text>
+<circle cx="900.0" cy="160" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="900.0" y="191" text-anchor="middle" font-size="15">Copperfield</text>
+<text x="900.0" y="208" text-anchor="middle" class="id">node-settlement-copperfield</text>
+<circle cx="1295.0" cy="160" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="1295.0" y="191" text-anchor="middle" font-size="15">Greyhaven</text>
+<text x="1295.0" y="208" text-anchor="middle" class="id">node-settlement-greyhaven</text>
+<circle cx="1690.0" cy="160" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="1690.0" y="191" text-anchor="middle" font-size="15">Rivermouth</text>
+<text x="1690.0" y="208" text-anchor="middle" class="id">node-settlement-rivermouth</text>
+<text x="42" y="303" font-size="19" fill="#694830">rail-coal-feeder</text>
+<path d="M120.0 345 H626.7" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="373.3" y="335" text-anchor="middle" class="edge">rail-coal-feeder-01</text>
+<path d="M646.7 345 H1153.3" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="900.0" y="335" text-anchor="middle" class="edge">rail-coal-feeder-02</text>
+<path d="M1173.3 345 H1680.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="1426.7" y="335" text-anchor="middle" class="edge">rail-coal-feeder-03</text>
+<circle cx="110.0" cy="345" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="110.0" y="376" text-anchor="middle" font-size="15">Brackenford</text>
+<text x="110.0" y="393" text-anchor="middle" class="id">node-settlement-brackenford</text>
+<circle cx="636.7" cy="345" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="636.7" y="376" text-anchor="middle" font-size="15">Blackridge</text>
+<text x="636.7" y="393" text-anchor="middle" class="id">node-settlement-blackridge</text>
+<circle cx="1163.3" cy="345" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="1163.3" y="376" text-anchor="middle" font-size="15">Calderwick</text>
+<text x="1163.3" y="393" text-anchor="middle" class="id">node-settlement-calderwick</text>
+<circle cx="1690.0" cy="345" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="1690.0" y="376" text-anchor="middle" font-size="15">Ironhaven rail junction</text>
+<text x="1690.0" y="393" text-anchor="middle" class="id">node-junction-rail-ironhaven</text>
+<text x="42" y="488" font-size="19" fill="#694830">rail-southern-arc</text>
+<path d="M120.0 530 H495.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="307.5" y="520" text-anchor="middle" class="edge">rail-southern-arc-01</text>
+<path d="M515.0 530 H890.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="702.5" y="520" text-anchor="middle" class="edge">rail-southern-arc-02</text>
+<path d="M910.0 530 H1285.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="1097.5" y="520" text-anchor="middle" class="edge">rail-southern-arc-03</text>
+<path d="M1305.0 530 H1680.0" stroke="#694830" stroke-width="4" fill="none"/>
+<text x="1492.5" y="520" text-anchor="middle" class="edge">rail-southern-arc-04</text>
+<circle cx="110.0" cy="530" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="110.0" y="561" text-anchor="middle" font-size="15">Westford rail junction</text>
+<text x="110.0" y="578" text-anchor="middle" class="id">node-junction-rail-westford</text>
+<circle cx="505.0" cy="530" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="505.0" y="561" text-anchor="middle" font-size="15">Dunmere</text>
+<text x="505.0" y="578" text-anchor="middle" class="id">node-settlement-dunmere</text>
+<circle cx="900.0" cy="530" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="900.0" y="561" text-anchor="middle" font-size="15">Ashbourne</text>
+<text x="900.0" y="578" text-anchor="middle" class="id">node-settlement-ashbourne</text>
+<circle cx="1295.0" cy="530" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="1295.0" y="561" text-anchor="middle" font-size="15">Foundry Vale</text>
+<text x="1295.0" y="578" text-anchor="middle" class="id">node-settlement-foundry-vale</text>
+<circle cx="1690.0" cy="530" r="9" fill="#e5d6b7" stroke="#694830" stroke-width="3"/>
+<text x="1690.0" y="561" text-anchor="middle" font-size="15">Ironhaven rail junction</text>
+<text x="1690.0" y="578" text-anchor="middle" class="id">node-junction-rail-ironhaven</text>
+<text x="42" y="735" font-size="20">Rail junctions and crossing structures</text>
+<text x="55" y="770" class="small">junction-rail-ironhaven at node-junction-rail-ironhaven: rail-basin-trunk-01, rail-coal-feeder-03, rail-southern-arc-04</text>
+<text x="55" y="796" class="small">junction-rail-westford at node-junction-rail-westford: rail-basin-trunk-01, rail-southern-arc-01</text>
+<text x="55" y="830" class="small">V1 · viaduct-calderwick · rail-coal-feeder-03 over river-calder-02 · no transfer</text>
+<text x="55" y="854" class="small">V2 · viaduct-ironhaven · rail-basin-trunk-02 over river-calder-03 · no transfer</text>
+<text x="55" y="878" class="small">B1 · bridge-greyhaven-rail · rail-basin-trunk-03 over canal-lower-calder-01 · no transfer</text>
+<text x="55" y="902" class="small">B2a, B2b · bridge-dunmere-rail · rail-southern-arc-02 over river-mere-02 · no transfer</text>
+<text x="55" y="926" class="small">A1 · aqueduct-mere · canal-lower-calder-01 over river-mere-02 · no transfer</text>
+<text x="55" y="950" class="small">B3 · bridge-westford-weaver-rail · rail-southern-arc-01 over river-weaver-02 · no transfer</text>
+<text x="55" y="974" class="small">B4 · bridge-mere-trunk · rail-basin-trunk-03 over river-mere-02 · no transfer</text>
+<text x="55" y="998" class="small">B5 · bridge-westford-calder-trunk · rail-basin-trunk-01 over river-calder-02 · no transfer</text>
+<text x="55" y="1022" class="small">B6 · bridge-capital-calder-feeder · rail-coal-feeder-03 over river-calder-02 · no transfer</text>
+<text x="55" y="1046" class="small">B7 · bridge-capital-weaver-southern · rail-southern-arc-04 over river-weaver-03 · no transfer</text>
+<text x="55" y="1070" class="small">B8 · bridge-westford-canal-southern · rail-southern-arc-01 over canal-weaver-01 · no transfer</text>
+<text x="55" y="1094" class="small">B9 · bridge-capital-canal-southern · rail-southern-arc-04 over canal-weaver-02 · no transfer</text>
+<text x="42" y="1148" class="small">12 main crossing structures / 13 physical spans (9 bridges, 2 viaducts, 1 aqueduct). Towpath bridge is a local pedestrian feature.</text>
+<text x="42" y="1174" class="small">Crossing symbols show vertical order only. A shared node creates railway transfer only at the two registered junctions.</text>
+</svg>

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { browserClient } from '@/lib/supabase/browser';
 import styles from './auth.module.css';
 
-export function LoginForm({ linkError = false, recovery = false }: { linkError?: boolean; recovery?: boolean }) {
+export function LoginForm({ notice, recovery = false }: { notice?: ReactNode; recovery?: boolean }) {
   const router = useRouter();
   const [recovering, setRecovering] = useState(recovery);
   const [busy, setBusy] = useState(false);
@@ -33,7 +33,7 @@ export function LoginForm({ linkError = false, recovery = false }: { linkError?:
     finally { setBusy(false); }
   }
   return <><p className="eyebrow">MEMBERS’ ENTRANCE</p><h2>{recovering ? 'Recover your access.' : 'Open the ledger.'}</h2><p>{recovering ? 'Request a password reset link for your account.' : 'Sign in to record the next chapter of your rivalry.'}</p>
-    {linkError && <p className="error-message" role="alert">This access link has expired or could not be verified. Request a new recovery link or contact your league administrator.</p>}
+    {notice}
     <form className={styles.form} onSubmit={submit} aria-busy={busy}>
       <div className="field"><label htmlFor="email">Email address</label><input id="email" name="email" type="email" autoComplete="email" required maxLength={254} placeholder="you@example.com" /></div>
       {!recovering && <div className="field"><label htmlFor="password">Password</label><input id="password" name="password" type="password" autoComplete="current-password" required /></div>}
