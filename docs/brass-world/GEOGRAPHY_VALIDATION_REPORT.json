@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "baseline_id": "calder-marches-geography-v1.0.0",
+  "freeze_date": "2026-11-23",
+  "source": "design-source/world.json",
+  "geometry_sha256": "b1408922756834220b8f30dcaee83dc3652f386097b99c6520aacb90092cb116",
+  "global_unique_ids": 227,
+  "counts": {
+    "settlements": 12,
+    "regions": 5,
+    "nodes": 42,
+    "corridors": 10,
+    "segments": 29,
+    "river_segments": 11,
+    "canal_segments": 6,
+    "rail_segments": 11,
+    "water_interface_segments": 1,
+    "crossing_structures": 12,
+    "bridge_structures": 9,
+    "viaducts": 2,
+    "aqueducts": 1,
+    "spans": 13,
+    "terrain_features": 37
+  },
+  "checks": [
+    "global ID uniqueness",
+    "normalized coordinate bounds",
+    "city/node anchors and labels/industries references",
+    "endpoint and ordered corridor continuity",
+    "canal and rail connectivity with all settlements served",
+    "river flow acyclicity and confluence terminals",
+    "crossing references, over-under order, and non-transfer semantics",
+    "B1-B9/V1-V2/A1 structure/span counts",
+    "approved separate Ironhaven downstream lock outlet",
+    "explicit freight interchanges",
+    "shared Day/Night source geometry",
+    "standalone/comparison render dimensions and exact panel parity"
+  ]
+}

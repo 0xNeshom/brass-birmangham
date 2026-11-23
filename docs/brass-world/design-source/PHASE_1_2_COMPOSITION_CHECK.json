@@ -1,0 +1,230 @@
+{
+  "status": "pass",
+  "limits": "Illustration coordinates remain provisional. Tests open-segment crossings between modes; endpoint joining follows route registry. No production coordinates are exported.",
+  "geometry_sha256": "eb5b624f5aab67d9238100d49331c274d1ba5b075f9a5ccb86f05ed7af9acf9e",
+  "cities": 12,
+  "regions": 5,
+  "crossings": [
+    {
+      "code": "B5",
+      "segments": [
+        "rail-basin-trunk-01",
+        "river-calder-02"
+      ],
+      "paths": [
+        "rails",
+        0,
+        "rivers",
+        0
+      ],
+      "illustration_pixel": [
+        931,
+        632
+      ]
+    },
+    {
+      "code": "V2",
+      "segments": [
+        "rail-basin-trunk-02",
+        "river-calder-03"
+      ],
+      "paths": [
+        "rails",
+        0,
+        "rivers",
+        0
+      ],
+      "illustration_pixel": [
+        1052,
+        579
+      ]
+    },
+    {
+      "code": "B4",
+      "segments": [
+        "rail-basin-trunk-03",
+        "river-mere-02"
+      ],
+      "paths": [
+        "rails",
+        0,
+        "rivers",
+        2
+      ],
+      "illustration_pixel": [
+        1317,
+        664
+      ]
+    },
+    {
+      "code": "V1",
+      "segments": [
+        "rail-coal-feeder-03",
+        "river-calder-02"
+      ],
+      "paths": [
+        "rails",
+        1,
+        "rivers",
+        0
+      ],
+      "illustration_pixel": [
+        791,
+        496
+      ]
+    },
+    {
+      "code": "B6",
+      "segments": [
+        "rail-coal-feeder-03",
+        "river-calder-02"
+      ],
+      "paths": [
+        "rails",
+        1,
+        "rivers",
+        0
+      ],
+      "illustration_pixel": [
+        896,
+        601
+      ]
+    },
+    {
+      "code": "B3",
+      "segments": [
+        "rail-southern-arc-01",
+        "river-weaver-02"
+      ],
+      "paths": [
+        "rails",
+        2,
+        "rivers",
+        1
+      ],
+      "illustration_pixel": [
+        480,
+        704
+      ]
+    },
+    {
+      "code": "B7",
+      "segments": [
+        "rail-southern-arc-04",
+        "river-weaver-03"
+      ],
+      "paths": [
+        "rails",
+        2,
+        "rivers",
+        1
+      ],
+      "illustration_pixel": [
+        892,
+        656
+      ]
+    },
+    {
+      "code": "B2a",
+      "segments": [
+        "rail-southern-arc-02",
+        "river-mere-02"
+      ],
+      "paths": [
+        "rails",
+        2,
+        "rivers",
+        2
+      ],
+      "illustration_pixel": [
+        480,
+        991
+      ]
+    },
+    {
+      "code": "B2b",
+      "segments": [
+        "rail-southern-arc-02",
+        "river-mere-02"
+      ],
+      "paths": [
+        "rails",
+        2,
+        "rivers",
+        2
+      ],
+      "illustration_pixel": [
+        534,
+        1019
+      ]
+    },
+    {
+      "code": "B1",
+      "segments": [
+        "rail-basin-trunk-03",
+        "canal-lower-calder-01"
+      ],
+      "paths": [
+        "rails",
+        0,
+        "canals",
+        1
+      ],
+      "illustration_pixel": [
+        1370,
+        765
+      ]
+    },
+    {
+      "code": "B8",
+      "segments": [
+        "rail-southern-arc-01",
+        "canal-weaver-01"
+      ],
+      "paths": [
+        "rails",
+        2,
+        "canals",
+        0
+      ],
+      "illustration_pixel": [
+        467,
+        724
+      ]
+    },
+    {
+      "code": "B9",
+      "segments": [
+        "rail-southern-arc-04",
+        "canal-weaver-02"
+      ],
+      "paths": [
+        "rails",
+        2,
+        "canals",
+        0
+      ],
+      "illustration_pixel": [
+        916,
+        740
+      ]
+    },
+    {
+      "code": "A1",
+      "segments": [
+        "canal-lower-calder-01",
+        "river-mere-02"
+      ],
+      "paths": [
+        "canals",
+        1,
+        "rivers",
+        2
+      ],
+      "illustration_pixel": [
+        1248,
+        790
+      ]
+    }
+  ]
+}

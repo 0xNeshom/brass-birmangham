@@ -1,11 +1,89 @@
-import './league-home.css';
-import {isConfigured} from '@/lib/supabase/config';
-import {ConfigurationRequired} from '@/components/configuration-required';
-import {requireMember} from '@/lib/auth';
-import {listLeagueTournaments} from '@/lib/repository';
-import {AppShell} from '@/components/app-shell';
-import {LeagueRefresh} from '@/components/league-refresh';
-import Link from 'next/link';
-import {completedCount,standings} from '@/domain/tournament';
-export default async function Home(){if(!isConfigured())return <ConfigurationRequired/>;const{client,groupId}=await requireMember();const page=await listLeagueTournaments(client);return <AppShell><LeagueRefresh groupId={groupId}/><section className="league-home"><header><div><p className="eyebrow">The Birmingham private league</p><h1>Every tournament, one ledger.</h1><p className="muted">Concurrent campaigns progress independently. Members join each roster on their own terms.</p></div><Link className="button" href="/tournaments/new">Create tournament</Link></header>{page.items.length===0?<div className="panel league-home-empty"><h2>Open the first ledger.</h2><p className="muted">Create a tournament, then invite league members to join its roster.</p><Link className="button" href="/tournaments/new">Create tournament</Link></div>:<div className="league-home-list">{page.items.map((tournament)=>{const count=completedCount(tournament);const leaders=standings(tournament).filter((row)=>row.rank===1);return <Link key={tournament.id} href={`/tournaments/${tournament.id}`} className="panel league-home-card"><div><p className="eyebrow">{count===10?'Complete':`${count} of 10 matches`}</p><h2>{tournament.title}</h2><p className="muted">{tournament.players.length} roster member{tournament.players.length===1?'':'s'}</p></div><div className="league-home-summary"><span>{count===10?'Winner':'Current leaders'}</span><strong>{leaders.map((row)=>row.name).join(' & ')||'No results yet'}</strong><small>{tournament.rulesVersion===1?'Legacy three-player rules':'Four-player match rules'}</small></div></Link>;})}</div>}<Link className="league-home-archives" href="/history">View tournament archives ↗</Link></section></AppShell>;}
-import './league-home.css';
+import "./league-home.css";
+import { isConfigured } from "@/lib/supabase/config";
+import { ConfigurationRequired } from "@/components/configuration-required";
+import { requireMember } from "@/lib/auth";
+import { listLeagueTournaments } from "@/lib/repository";
+import { AppShell } from "@/components/app-shell";
+import { LeagueRefresh } from "@/components/league-refresh";
+import Link from "next/link";
+import { completedCount, standings } from "@/domain/tournament";
+export default async function Home() {
+  if (!isConfigured()) return <ConfigurationRequired />;
+  const { client, groupId } = await requireMember();
+  const page = await listLeagueTournaments(client);
+  return (
+    <AppShell>
+      <LeagueRefresh groupId={groupId} />
+      <section className="league-home">
+        <header>
+          <div>
+            <p className="eyebrow">The Birmingham private league</p>
+            <h1>Every tournament, one ledger.</h1>
+            <p className="muted">
+              Concurrent campaigns progress independently. Members join each
+              roster on their own terms.
+            </p>
+          </div>
+          <Link className="button" href="/tournaments/new">
+            Create tournament
+          </Link>
+        </header>
+        {page.items.length === 0 ? (
+          <div className="panel league-home-empty">
+            <h2>Open the first ledger.</h2>
+            <p className="muted">
+              Create a tournament, then invite league members to join its
+              roster.
+            </p>
+            <Link className="button" href="/tournaments/new">
+              Create tournament
+            </Link>
+          </div>
+        ) : (
+          <div className="league-home-list">
+            {page.items.map((tournament) => {
+              const count = completedCount(tournament);
+              const leaders = standings(tournament).filter(
+                (row) => row.rank === 1,
+              );
+              return (
+                <Link
+                  key={tournament.id}
+                  href={`/tournaments/${tournament.id}`}
+                  className="panel league-home-card"
+                >
+                  <div>
+                    <p className="eyebrow">
+                      {count === 10 ? "Complete" : `${count} of 10 matches`}
+                    </p>
+                    <h2>{tournament.title}</h2>
+                    <p className="muted">
+                      {tournament.players.length} roster member
+                      {tournament.players.length === 1 ? "" : "s"}
+                    </p>
+                  </div>
+                  <div className="league-home-summary">
+                    <span>{count === 10 ? "Winner" : "Current leaders"}</span>
+                    <strong>
+                      {leaders.map((row) => row.name).join(" & ") ||
+                        "No results yet"}
+                    </strong>
+                    <small>
+                      {tournament.rulesVersion === 1
+                        ? "Legacy three-player rules"
+                        : "Four-player match rules"}
+                    </small>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        <Link className="league-home-archives" href="/history">
+          View tournament archives ↗
+        </Link>
+      </section>
+    </AppShell>
+  );
+}
+import "./league-home.css";

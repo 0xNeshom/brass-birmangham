@@ -1,6 +1,6 @@
 # The Calder Marches — Geography Specification
 
-Status — Phase 1 proposal for owner review. Geography is shared by Day and Night. Relative placement is deliberate. Coordinates and distances remain provisional until composition approval.
+Status — Phase 1 final geography freeze complete. Canonical coordinates and topology are recorded in [design-source/world.json](design-source/world.json), revision `calder-marches-geography-v1.0.0`. The approved Phase 1.2 composition and identity are retained. See the [freeze report](PHASE_1_FINAL_FREEZE_REPORT.md) and [validation output](GEOGRAPHY_VALIDATION_REPORT.json).
 
 Related documents — [World design](WORLD_DESIGN_SPEC.md), [city registry](WORLD_CITY_REGISTRY.md), [industry registry](WORLD_INDUSTRY_REGISTRY.md), [route design](WORLD_ROUTE_DESIGN.md), [coordinate plan](WORLD_COORDINATE_PLAN.md).
 
@@ -18,6 +18,26 @@ Use a landscape atlas sheet with east to the right and north at the top. The lan
 
 The lower Calder bends through open flood meadow between Ironhaven and Greyhaven. Keep that meadow, a patch of northern moor, and the southwest farmland comparatively empty. They provide separation between the busiest line bundles and room for regional labels. Geography continues visually into the map frame at the watershed, western road and eastern estuary. The frame is the atlas crop, rather than a physical wall around the province.
 
+### Phase 1.2 targeted atlas refinements
+
+The [refined composition](PHASE_1_2_GEOGRAPHY.png) retains the north-up 3:2 frame and the original placement hierarchy. The [Day/Night comparison](PHASE_1_2_DAY_NIGHT.png) uses one shared geometry source. The Ironhaven title is lifted into the open basin area; its double-ring marker separates the capital from the single-ring settlement markers. Region captions are kept away from the busiest route bundles while settlement, terrain and route geometry remain fixed.
+
+| Area | Terrain and land cover | Settlement footprint and water edge |
+| --- | --- | --- |
+| Northern Uplands | Close contours trace the Brackenford shelf and Blackridge scarp. A gap narrows toward Calderwick. Woodland sits on lower sheltered slopes, with open moor above | Small pit and spoil clusters remain outside the valley floor. Calderwick sits near the river crossing, with the viaduct distinct from the settlement |
+| Western Textile District | Softer contours follow the Weaver valley. Trees cluster along valley shoulders and mark the edge of open pasture | Millbrook grows along the mill reach. Westford occupies a longer terrace around its wharf and railway approach |
+| Central Industrial Basin | The basin opens at the Weaver confluence. Copperfield's saddle and the Foundry Vale bench give the surrounding works firmer ground | Ironhaven has a compact civic core and distinct works, rail yard and canal basin. Foundry Vale spreads along the southern approach. Flood meadow east of the capital stays open |
+| Eastern Canal District | The Calder broadens into an estuary beyond the Greyhaven narrowing. Flood meadows, reeds and tidal margins separate the river from the engineered cut | Greyhaven's warehouses occupy a raised inland terrace. Rivermouth has a sheltered dock basin beside its sea lock, with shipping frontage on the tidal inlet |
+| Southern Lowlands | Wide contour spacing, hedged fields and scattered orchards surround the Mere. Wet meadow marks the tributary's floor | Dunmere is compact on the meadow edge. Ashbourne extends along the grain market and canal terminus. The Foundry reservoir supports the canal on higher ground |
+
+### Terrain symbols and labels
+
+The nested line symbols are **schematic elevation contours**, not mines, ore deposits, or geological targets. Inner rings indicate higher ground; close spacing indicates a steeper slope. Short inward hachures reinforce slope direction. They are canonical 2D geometry for v1.0.0, but do not encode surveyed heights or numeric gradients. A later engineered terrain surface may refine them without changing this frozen cartographic meaning.
+
+Day and Night use the same contour paths, forest footprints, riverbanks, fields, city anchors and network paths. Day renders warm parchment and muted green relief with aged brass accents. Night uses charcoal parchment, deeper slate-green terrain, copper infrastructure, subdued shadow pools and selective amber lights at works and docks. The amber light is a material/emission treatment and adds no settlement, route or structure. See the [paired preview](PHASE_1_2_DAY_NIGHT.png).
+
+Shared land cover, industrial footprints, shorelines, and transport geometry define both plates. Day uses warm parchment and muted green washes. Night uses dark terrain washes, copper infrastructure, and local light and reflection at works and docks. The light marks are illustrative and add no new infrastructure.
+
 ## Regional zones
 
 | Region and stable ID | Bounds and terrain | Major cities | Resources and economy | Transport and visual expression |
@@ -32,9 +52,9 @@ These are cartographic regions with transition belts. Their boundaries do not im
 
 ## Water and grade constraints
 
-The Calder flows south from moorland east of Blackridge through Calderwick to Ironhaven, then east through Greyhaven to Rivermouth. The Weaver flows from the western hills through Millbrook and Westford and joins the Calder at Ironhaven. The Mere drains Dunmere eastward across the southern lowlands, turns north east of Ashbourne, and enters the lower Calder west of Greyhaven. The Mere does not climb through Foundry Vale.
+The Calder flows south from moorland east of Blackridge through Calderwick to Ironhaven, then east through Greyhaven to Rivermouth. The Weaver flows from the western hills through Millbrook and Westford and joins the Calder at Ironhaven. The Mere drains Dunmere eastward across the southern lowlands, passes south of Ashbourne and turns north east of Foundry Vale before entering the lower Calder west of Greyhaven. This keeps the Mere on the lowland floor and separates it from the southern canal's approach to Ashbourne.
 
-The upper Calder and Weaver are shallow and interrupted by falls. They supply mills and canal water, with navigation assigned to engineered canals. The lower Calder is tidal near Rivermouth and flood-prone upstream. Its parallel canal is a distinct controlled waterway with locks at the river interfaces. Rail approaches use benches above the floodplain and viaducts at the two broad river crossings. Detailed elevations must be resolved during the later surveyed coordinate pass.
+The upper Calder and Weaver are shallow and interrupted by falls. They supply mills and canal water, with navigation assigned to engineered canals. The lower Calder is tidal near Rivermouth and flood-prone upstream. Its parallel canal is a distinct controlled waterway with locks at the river interfaces. Rail approaches use benches above the floodplain and viaducts at the two broad river crossings. Numeric elevations, flood levels, and structure clearances are engineering inputs outside the frozen cartographic coordinates.
 
 ## Composition consistency review
 
@@ -45,4 +65,4 @@ The upper Calder and Weaver are shallow and interrupted by falls. They supply mi
 - Crossings carry explicit bridge, aqueduct, or junction identities in the route design. A visual intersection alone does not create a network connection.
 - Day and Night change material and illumination treatment while using this single geographical proposal.
 
-No unresolved topological contradiction was identified in this schematic review. Detailed grade, curvature, and cartographic collision checks remain part of the later approved-coordinate pass.
+The final freeze validator reports no unresolved topology or coordinate-reference issue. Detailed grade and curvature engineering remains deferred; the map's route positions are canonical, and future adjustments must create a versioned geography revision.

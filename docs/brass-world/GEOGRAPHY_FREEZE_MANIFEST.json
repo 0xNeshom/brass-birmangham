@@ -1,0 +1,104 @@
+{
+  "manifest_version": "1.0.0",
+  "baseline_id": "calder-marches-geography-v1.0.0",
+  "freeze_date": "2026-11-23",
+  "authority": "design-source/world.json",
+  "geometry_sha256": "b1408922756834220b8f30dcaee83dc3652f386097b99c6520aacb90092cb116",
+  "artifacts": [
+    {
+      "path": "design-source/world.json",
+      "sha256": "5665b1d1c3dc9f9f955cae14e9cf66a1f78f571a6a14ffd5ec02411a6d00b19c",
+      "bytes": 383690
+    },
+    {
+      "path": "design-source/render_frozen_baseline.py",
+      "sha256": "f20f25cdd088c9ff81b687413c61fbb446c95b375405255774f05b84645b6524",
+      "bytes": 11854
+    },
+    {
+      "path": "design-source/render_frozen_topology.py",
+      "sha256": "f003f4b5438e3ece1a772fd6f9524a16f3a9371a85093e525b2864b87d087405",
+      "bytes": 5488
+    },
+    {
+      "path": "design-source/validate_frozen_geography.py",
+      "sha256": "2cdd9ce986745a28872cf45eacf40b2db44a8f180d0aff894af84b046f086ab5",
+      "bytes": 14406
+    },
+    {
+      "path": "design-source/create_freeze_manifest.py",
+      "sha256": "3515a3d400bdbe570a729ebbc69e43a7db2ac0dc5d7e2c832c9be1574d67b06f",
+      "bytes": 1562
+    },
+    {
+      "path": "design-source/GEOGRAPHY_V1_0_0_EQUIVALENCE.txt",
+      "sha256": "c3a50167cca45c1f49f0e3e903eaccde1bd15ea636bb6dfe2b4089a3939d9c11",
+      "bytes": 261
+    },
+    {
+      "path": "WORLD_GEOGRAPHY_SPEC.md",
+      "sha256": "04d7bcc22c3790c477782934abacd3eeb190981318d9d9e26daf5b9b1616be9a",
+      "bytes": 11025
+    },
+    {
+      "path": "WORLD_ROUTE_DESIGN.md",
+      "sha256": "b8c40662c9f471e97c5383601ed1cb41f1c154d04ce61e6a078919aef9662b19",
+      "bytes": 19718
+    },
+    {
+      "path": "WORLD_COORDINATE_PLAN.md",
+      "sha256": "3e27a8ee5aaba99164b4d5d196ebe9e21b84447fbb8525598d4cfb55caf2332b",
+      "bytes": 4367
+    },
+    {
+      "path": "WORLD_ASSET_MANIFEST.md",
+      "sha256": "3bf09efb5766aa097265d484d18e8e4ea5ac2798c190ecb764fcc83696e85f35",
+      "bytes": 11190
+    },
+    {
+      "path": "PHASE_1_COMPLETION_REPORT.md",
+      "sha256": "a05ec693787d560fa96f233959da1be63c10e67b51e773a711dff5476b326c01",
+      "bytes": 2840
+    },
+    {
+      "path": "PHASE_1_FINAL_FREEZE_REPORT.md",
+      "sha256": "3844df47051bd4a90a176667e3bc774c261afcd8c28e887f447980c55a9a8dca",
+      "bytes": 3271
+    },
+    {
+      "path": "GEOGRAPHY_CONNECTIVITY_VALIDATION.md",
+      "sha256": "fc965a068fc9e15c0532049a6d79a9e2d6ed1815fdb887d6e6be77687a2e1488",
+      "bytes": 2616
+    },
+    {
+      "path": "GEOGRAPHY_VALIDATION_REPORT.json",
+      "sha256": "7d4645dca2d566ec7eb34f1014d431665e323bb04406c41cb2e8e269de48e887",
+      "bytes": 1261
+    },
+    {
+      "path": "GEOGRAPHY_DAY_V1_0_0.png",
+      "sha256": "50a0c3a01eb8c3dc484dc4e9daff42b384e47d6e7e0ba4ca7d0170ff8c937830",
+      "bytes": 165591
+    },
+    {
+      "path": "GEOGRAPHY_NIGHT_V1_0_0.png",
+      "sha256": "c85f2a42f0fadd1135f92a6f92844d1e1d1c4b9215cb510c10656d36b9f2eebc",
+      "bytes": 237952
+    },
+    {
+      "path": "GEOGRAPHY_COMPARISON_V1_0_0.png",
+      "sha256": "c73361c8b871e1c6db57ac193f6adf73559f25effbc84ce8a13b3e0a8ebff0d6",
+      "bytes": 424272
+    },
+    {
+      "path": "WATER_NETWORK_V1_0_0.svg",
+      "sha256": "0bf53a1e6bceede093dc2283a8ab90b307a686b27e69eb741192382e9464ad07",
+      "bytes": 13357
+    },
+    {
+      "path": "RAIL_NETWORK_V1_0_0.svg",
+      "sha256": "28f8d92287f7681e86aee84adb6c0b21779bdc7f41e6077173bb5e18c89ca434",
+      "bytes": 7935
+    }
+  ]
+}

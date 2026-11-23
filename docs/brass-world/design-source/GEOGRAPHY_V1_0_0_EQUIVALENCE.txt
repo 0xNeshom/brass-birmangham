@@ -1,0 +1,3 @@
+Day and Night render from design-source/world.json and share its complete geographic geometry.
+Geometry SHA-256 b1408922756834220b8f30dcaee83dc3652f386097b99c6520aacb90092cb116
+Board frame 1800 x 1200 (3:2); normalized coordinates multiply by width and height.

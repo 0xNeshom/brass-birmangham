@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="940" viewBox="0 0 1500 940">
+<rect width="100%" height="100%" fill="#f6f1e4"/>
+<text x="55" y="48" font-family="serif" font-size="30" fill="#332d25">Calder Marches · Water topology</text>
+<text x="55" y="77" font-family="sans-serif" font-size="15" fill="#5a5349">Rivers, canals and the separately authorized Ironhaven canal-to-Calder outlet</text>
+<rect x="55" y="110" width="860" height="570" fill="#e8e1d0" stroke="#81745f"/>
+<polyline points="485.0,155.1 504.1,214.5 482.6,269.1 437.2,314.2" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-calder-01: node-river-source-calder to node-river-reach-calderwick</title>
+<circle cx="482.6" cy="269.1" r="2.4" fill="#438caa"/>
+<polyline points="437.2,314.2 432.4,347.5 461.1,376.0 504.1,414.0" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-calder-02: node-river-reach-calderwick to junction-river-weaver-calder</title>
+<circle cx="461.1" cy="376.0" r="2.4" fill="#438caa"/>
+<polyline points="504.1,414.0 532.8,428.2" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-calder-03: junction-river-weaver-calder to node-river-calder-below-weaver</title>
+<circle cx="532.8" cy="428.2" r="2.4" fill="#438caa"/>
+<polyline points="532.8,428.2 571.0,361.8 652.2,338.0 714.3,385.5" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-calder-04: node-river-calder-below-weaver to junction-river-mere-calder</title>
+<circle cx="652.2" cy="338.0" r="2.4" fill="#438caa"/>
+<polyline points="714.3,385.5 738.2,428.2" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-calder-05: junction-river-mere-calder to node-river-reach-greyhaven</title>
+<circle cx="738.2" cy="428.2" r="2.4" fill="#438caa"/>
+<polyline points="738.2,428.2 790.8,471.0 848.1,487.6 900.7,506.6" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-calder-06: node-river-reach-greyhaven to node-river-estuary-rivermouth</title>
+<circle cx="848.1" cy="487.6" r="2.4" fill="#438caa"/>
+<polyline points="98.0,295.2 141.0,314.2 188.8,371.2" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-weaver-01: node-river-source-weaver to node-river-reach-millbrook</title>
+<circle cx="141.0" cy="314.2" r="2.4" fill="#438caa"/>
+<polyline points="188.8,371.2 231.8,414.0 289.1,447.3" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-weaver-02: node-river-reach-millbrook to node-river-reach-westford</title>
+<circle cx="231.8" cy="414.0" r="2.4" fill="#438caa"/>
+<polyline points="289.1,447.3 372.7,447.3 432.4,437.8 504.1,414.0" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-weaver-03: node-river-reach-westford to junction-river-weaver-calder</title>
+<circle cx="432.4" cy="437.8" r="2.4" fill="#438caa"/>
+<polyline points="107.6,623.0 188.8,618.3 270.0,582.6" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-mere-01: node-river-source-mere to node-river-reach-dunmere</title>
+<circle cx="188.8" cy="618.3" r="2.4" fill="#438caa"/>
+<polyline points="270.0,582.6 303.4,577.9 327.3,637.2 508.9,632.5 623.6,604.0 657.0,461.5 714.3,385.5" fill="none" stroke="#438caa" stroke-width="4"/>
+<title>river-mere-02: node-river-reach-dunmere to junction-river-mere-calder</title>
+<circle cx="508.9" cy="632.5" r="2.4" fill="#438caa"/>
+<polyline points="188.8,380.8 203.1,418.8 289.1,459.1" fill="none" stroke="#237a72" stroke-width="4" stroke-dasharray="8 5"/>
+<title>canal-weaver-01: node-canal-millbrook-wharf to node-canal-westford-basin</title>
+<circle cx="203.1" cy="418.8" r="2.4" fill="#237a72"/>
+<polyline points="289.1,459.1 389.4,485.2 465.9,480.5 518.4,442.5" fill="none" stroke="#237a72" stroke-width="4" stroke-dasharray="8 5"/>
+<title>canal-weaver-02: node-canal-westford-basin to node-junction-canal-ironhaven-basin</title>
+<circle cx="465.9" cy="480.5" r="2.4" fill="#237a72"/>
+<polyline points="518.4,442.5 585.3,473.4 676.1,490.0 719.1,468.6 743.0,463.9" fill="none" stroke="#237a72" stroke-width="4" stroke-dasharray="8 5"/>
+<title>canal-lower-calder-01: node-junction-canal-ironhaven-basin to node-canal-greyhaven-basin</title>
+<circle cx="676.1" cy="490.0" r="2.4" fill="#237a72"/>
+<polyline points="743.0,463.9 790.8,513.7 848.1,520.9" fill="none" stroke="#237a72" stroke-width="4" stroke-dasharray="8 5"/>
+<title>canal-lower-calder-02: node-canal-greyhaven-basin to node-canal-rivermouth-dock</title>
+<circle cx="790.8" cy="513.7" r="2.4" fill="#237a72"/>
+<polyline points="451.6,599.2 513.7,580.2 566.2,547.0" fill="none" stroke="#237a72" stroke-width="4" stroke-dasharray="8 5"/>
+<title>canal-southern-01: node-canal-ashbourne-terminal to node-canal-foundry-basin</title>
+<circle cx="513.7" cy="580.2" r="2.4" fill="#237a72"/>
+<polyline points="566.2,547.0 575.8,513.7 532.8,475.8 518.4,442.5" fill="none" stroke="#237a72" stroke-width="4" stroke-dasharray="8 5"/>
+<title>canal-southern-02: node-canal-foundry-basin to node-junction-canal-ironhaven-basin</title>
+<circle cx="532.8" cy="475.8" r="2.4" fill="#237a72"/>
+<polyline points="518.4,442.5 525.6,435.4 532.8,428.2" fill="none" stroke="#d18b39" stroke-width="4"/>
+<title>canal-interface-ironhaven-01: node-junction-canal-ironhaven-basin to node-river-calder-below-weaver</title>
+<circle cx="525.6" cy="435.4" r="2.4" fill="#d18b39"/>
+<circle cx="566.2" cy="547.0" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-canal-foundry-basin (canal-access)</title></circle>
+<circle cx="714.3" cy="385.5" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>junction-river-mere-calder (confluence)</title></circle>
+<circle cx="188.8" cy="380.8" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-canal-millbrook-wharf (canal-access)</title></circle>
+<circle cx="848.1" cy="520.9" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-canal-rivermouth-dock (canal-access)</title></circle>
+<circle cx="270.0" cy="582.6" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-reach-dunmere (river-reach)</title></circle>
+<circle cx="107.6" cy="623.0" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-source-mere (source)</title></circle>
+<circle cx="188.8" cy="371.2" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-reach-millbrook (river-reach)</title></circle>
+<circle cx="289.1" cy="447.3" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-reach-westford (river-reach)</title></circle>
+<circle cx="900.7" cy="506.6" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-estuary-rivermouth (river-reach)</title></circle>
+<circle cx="485.0" cy="155.1" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-source-calder (source)</title></circle>
+<circle cx="743.0" cy="463.9" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-canal-greyhaven-basin (canal-access)</title></circle>
+<circle cx="437.2" cy="314.2" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-reach-calderwick (river-reach)</title></circle>
+<circle cx="289.1" cy="459.1" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-canal-westford-basin (canal-access)</title></circle>
+<circle cx="738.2" cy="428.2" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-reach-greyhaven (river-reach)</title></circle>
+<circle cx="518.4" cy="442.5" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-junction-canal-ironhaven-basin (canal-junction)</title></circle>
+<circle cx="532.8" cy="428.2" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-calder-below-weaver (river-reach)</title></circle>
+<circle cx="451.6" cy="599.2" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-canal-ashbourne-terminal (canal-access)</title></circle>
+<circle cx="98.0" cy="295.2" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-river-source-weaver (source)</title></circle>
+<circle cx="504.1" cy="414.0" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>junction-river-weaver-calder (confluence)</title></circle>
+<text x="965" y="115" font-family="serif" font-size="21" fill="#332d25">Corridors and ordered segments</text>
+<text x="965" y="148" font-family="sans-serif" font-size="16" font-weight="bold" fill="#438caa">river-calder · river</text>
+<text x="977" y="170" font-family="monospace" font-size="11.5" fill="#352f28">river-calder-01: node-river-source-calder → node-river-reach-calderwick</text>
+<text x="977" y="186" font-family="monospace" font-size="11.5" fill="#352f28">river-calder-02: node-river-reach-calderwick → junction-river-weaver-calder</text>
+<text x="977" y="202" font-family="monospace" font-size="11.5" fill="#352f28">river-calder-03: junction-river-weaver-calder → node-river-calder-below-weaver</text>
+<text x="977" y="218" font-family="monospace" font-size="11.5" fill="#352f28">river-calder-04: node-river-calder-below-weaver → junction-river-mere-calder</text>
+<text x="977" y="234" font-family="monospace" font-size="11.5" fill="#352f28">river-calder-05: junction-river-mere-calder → node-river-reach-greyhaven</text>
+<text x="977" y="250" font-family="monospace" font-size="11.5" fill="#352f28">river-calder-06: node-river-reach-greyhaven → node-river-estuary-rivermouth</text>
+<text x="977" y="266" font-family="sans-serif" font-size="11" fill="#5a5349">junction-river-weaver-calder: receives river-weaver</text>
+<text x="977" y="281" font-family="sans-serif" font-size="11" fill="#5a5349">junction-river-mere-calder: receives river-mere</text>
+<text x="965" y="304" font-family="sans-serif" font-size="16" font-weight="bold" fill="#438caa">river-weaver · river</text>
+<text x="977" y="326" font-family="monospace" font-size="11.5" fill="#352f28">river-weaver-01: node-river-source-weaver → node-river-reach-millbrook</text>
+<text x="977" y="342" font-family="monospace" font-size="11.5" fill="#352f28">river-weaver-02: node-river-reach-millbrook → node-river-reach-westford</text>
+<text x="977" y="358" font-family="monospace" font-size="11.5" fill="#352f28">river-weaver-03: node-river-reach-westford → junction-river-weaver-calder</text>
+<text x="977" y="374" font-family="sans-serif" font-size="11" fill="#5a5349">junction-river-weaver-calder: joins river-calder</text>
+<text x="965" y="397" font-family="sans-serif" font-size="16" font-weight="bold" fill="#438caa">river-mere · river</text>
+<text x="977" y="419" font-family="monospace" font-size="11.5" fill="#352f28">river-mere-01: node-river-source-mere → node-river-reach-dunmere</text>
+<text x="977" y="435" font-family="monospace" font-size="11.5" fill="#352f28">river-mere-02: node-river-reach-dunmere → junction-river-mere-calder</text>
+<text x="977" y="451" font-family="sans-serif" font-size="11" fill="#5a5349">junction-river-mere-calder: joins river-calder</text>
+<text x="965" y="474" font-family="sans-serif" font-size="16" font-weight="bold" fill="#237a72">canal-weaver · canal</text>
+<text x="977" y="496" font-family="monospace" font-size="11.5" fill="#352f28">canal-weaver-01: node-canal-millbrook-wharf → node-canal-westford-basin</text>
+<text x="977" y="512" font-family="monospace" font-size="11.5" fill="#352f28">canal-weaver-02: node-canal-westford-basin → node-junction-canal-ironhaven-basin</text>
+<text x="965" y="536" font-family="sans-serif" font-size="16" font-weight="bold" fill="#237a72">canal-lower-calder · canal</text>
+<text x="977" y="558" font-family="monospace" font-size="11.5" fill="#352f28">canal-lower-calder-01: node-junction-canal-ironhaven-basin → node-canal-greyhaven-basin</text>
+<text x="977" y="574" font-family="monospace" font-size="11.5" fill="#352f28">canal-lower-calder-02: node-canal-greyhaven-basin → node-canal-rivermouth-dock</text>
+<text x="965" y="598" font-family="sans-serif" font-size="16" font-weight="bold" fill="#237a72">canal-southern · canal</text>
+<text x="977" y="620" font-family="monospace" font-size="11.5" fill="#352f28">canal-southern-01: node-canal-ashbourne-terminal → node-canal-foundry-basin</text>
+<text x="977" y="636" font-family="monospace" font-size="11.5" fill="#352f28">canal-southern-02: node-canal-foundry-basin → node-junction-canal-ironhaven-basin</text>
+<text x="965" y="660" font-family="sans-serif" font-size="16" font-weight="bold" fill="#d18b39">canal-interface-ironhaven · water-interface</text>
+<text x="977" y="682" font-family="monospace" font-size="11.5" fill="#352f28">canal-interface-ironhaven-01: node-junction-canal-ironhaven-basin → node-river-calder-below-weaver</text>
+<text x="965" y="845" font-family="sans-serif" font-size="13" font-weight="bold" fill="#8a5726">Outlet lock lock-ironhaven-river → node-river-calder-below-weaver</text>
+<text x="965" y="865" font-family="sans-serif" font-size="12" fill="#5a5349">Connector: canal-interface-ironhaven-01; distinct from natural Weaver confluence</text>
+<text x="55" y="715" font-family="sans-serif" font-size="13" fill="#51493e">Map positions use the canonical normalized 3:2 board frame. Lines show only registered segments.</text>
+<text x="55" y="745" font-family="sans-serif" font-size="14" fill="#51493e">Frozen baseline: calder-marches-geography-v1.0.0 · north up · Day/Night share identical geometry</text>
+</svg>

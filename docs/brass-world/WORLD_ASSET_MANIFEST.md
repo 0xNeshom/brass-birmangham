@@ -1,6 +1,6 @@
 # The Calder Marches — World Asset Manifest
 
-Design proposal v1 • 23 November 2026 • Production assets pending geographical and visual approval
+Phase 1 final geography freeze • 23 November 2026 • Canonical design baseline `calder-marches-geography-v1.0.0`
 
 This register defines reusable asset families for the original Calder Marches atlas. It covers planned work and the Phase 1 concept outputs. It does not certify production geometry or rights to assets that have not been created or acquired. [Visual Language](VISUAL_LANGUAGE.md), [City Registry](WORLD_CITY_REGISTRY.md), [Industry Registry](WORLD_INDUSTRY_REGISTRY.md) and [Coordinate Plan](WORLD_COORDINATE_PLAN.md) define their use.
 
@@ -10,12 +10,33 @@ This register defines reusable asset families for the original Calder Marches at
 | --- | --- | --- |
 | concept-presentation-v1 | [World Concept Presentation](WORLD_CONCEPT_PRESENTATION.pdf) | Original proposed composition, visual treatments and depth examples. Owner review artifact. Page positions are provisional |
 | concept-geography-v1 | [World Geography Preview](WORLD_GEOGRAPHY_PREVIEW.png) | 1800 × 1200 overview from the presentation. Original schematic illustration for review |
+| concept-geography-v1.1 | [Refined geography](PHASE_1_1_GEOGRAPHY.png) | Original north-up atlas plate. Draft positions and footprints for owner review |
+| concept-day-night-v1.1 | [Day/Night comparison](PHASE_1_1_DAY_NIGHT.png) and [Night plate](PHASE_1_1_NIGHT.png) | Shared geography with separate paper, ink, shadow, and light treatments |
+| design-topology-v1.1 | [Topology registry](PHASE_1_1_TOPOLOGY.json) | Design data for endpoint and interface validation. Canonical coordinates are pending |
+| design-network-plates-v1.1 | [Water topology](PHASE_1_1_WATER_TOPOLOGY.svg) and [railway topology](PHASE_1_1_RAIL_TOPOLOGY.svg) | Schematic connectivity plates. Spatial placement is reviewed on the atlas plate |
+| concept-geography-v1.2 | [Refined geography](PHASE_1_2_GEOGRAPHY.png) | Original north-up 3:2 review plate. Targeted label and marker hierarchy refinements; coordinates remain provisional |
+| concept-day-night-v1.2 | [Day/Night comparison](PHASE_1_2_DAY_NIGHT.png) and [Night plate](PHASE_1_2_NIGHT.png) | Same city, terrain, water, transport and crossing geometry; separate material, lighting and atmosphere |
+| design-topology-v1.2 | [Canonical topology registry](PHASE_1_2_TOPOLOGY.json) | 119 globally unique entity IDs, explicit endpoint nodes, segment records, crossings, spans and interfaces |
+| design-network-plates-v1.2 | [Water topology](PHASE_1_2_WATER_TOPOLOGY.svg) and [railway topology](PHASE_1_2_RAIL_TOPOLOGY.svg) | Regenerated endpoint diagrams keyed to the Phase 1.2 registry |
+| design-validation-v1.2 | [Connectivity report](PHASE_1_2_CONNECTIVITY_VALIDATION.md) and [completion report](PHASE_1_2_COMPLETION_REPORT.md) | Automated integrity results and open owner decisions |
+| canonical-world-v1.0.0 | [Canonical world source](design-source/world.json) | Frozen normalized 3:2 coordinates, route geometry and shared Day/Night geography |
+| final-preview-v1.0.0 | [Day plate](GEOGRAPHY_DAY_V1_0_0.png), [Night plate](GEOGRAPHY_NIGHT_V1_0_0.png), [comparison](GEOGRAPHY_COMPARISON_V1_0_0.png) | Day/Night generated from one canonical source; geometry fingerprint recorded |
+| final-network-diagrams-v1.0.0 | [Water topology](WATER_NETWORK_V1_0_0.svg) and [rail topology](RAIL_NETWORK_V1_0_0.svg) | Ordered endpoints listed from the canonical registry; separate physical crossing records |
+| final-validation-v1.0.0 | [Validation report](GEOGRAPHY_VALIDATION_REPORT.json), [freeze manifest](GEOGRAPHY_FREEZE_MANIFEST.json), [final report](PHASE_1_FINAL_FREEZE_REPORT.md) | Global ID, endpoint, river-flow, crossing/span, lock outlet, coordinate, and parity checks |
+| final-connectivity-v1.0.0 | [City and infrastructure connectivity report](GEOGRAPHY_CONNECTIVITY_VALIDATION.md) | Human-readable summary of corridor continuity, transfer semantics, crossings, lock decision, and deferred engineering values |
+
+Phase 1.1 and 1.2 artifacts are retained as historical snapshots. The v1.0.0 plates are drawn from [render_frozen_baseline.py](design-source/render_frozen_baseline.py); topology diagrams come from [render_frozen_topology.py](design-source/render_frozen_topology.py). [validate_frozen_geography.py](design-source/validate_frozen_geography.py) validates the canonical source and writes the machine report. The [geometry fingerprint](design-source/GEOGRAPHY_V1_0_0_EQUIVALENCE.txt) is shared by both styles. Source tools use Python, Pillow, and local DejaVu Serif/Sans review fonts; these are design-time tools, not runtime dependencies.
+
+## Design specifications
+
+| Identifier | Document | Purpose |
+| --- | --- | --- |
 | design-world-v1 | [World Design Specification](WORLD_DESIGN_SPEC.md) | Creative scope, history and approval criteria |
-| design-geography-v1 | [World Geography Specification](WORLD_GEOGRAPHY_SPEC.md) | Proposed terrain and settlement relationships |
+| design-geography-v1 | [World Geography Specification](WORLD_GEOGRAPHY_SPEC.md) | Frozen terrain and settlement relationships |
 | design-cities-v1 | [World City Registry](WORLD_CITY_REGISTRY.md) | Twelve stable city identifiers with proposed identities |
 | design-industry-v1 | [World Industry Registry](WORLD_INDUSTRY_REGISTRY.md) | Economic and pictogram families, with no scoring semantics |
-| design-routes-v1 | [World Route Design](WORLD_ROUTE_DESIGN.md) | Proposed river, canal and rail corridors |
-| design-coordinates-v1 | [World Coordinate Plan](WORLD_COORDINATE_PLAN.md) | Future normalized coordinate convention and approval gate |
+| design-routes-v1 | [World Route Design](WORLD_ROUTE_DESIGN.md) | Frozen river, canal and rail corridors |
+| design-coordinates-v1 | [World Coordinate Plan](WORLD_COORDINATE_PLAN.md) | Canonical normalized coordinate convention and transform |
 | design-visual-v1 | [Visual Language](VISUAL_LANGUAGE.md) | Original atlas styling and shallow depth budgets |
 
 The presentation and drawings must identify any generated artistic imagery as a concept reference. A generated image cannot supply authoritative names, endpoints or coordinates. The design registries and owner-approved composition will establish those facts in a later phase.

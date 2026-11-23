@@ -3,8 +3,14 @@
 import dynamic from 'next/dynamic';
 import { Component, useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './industrial-hero.module.css';
+import type { FocusedAsset } from './industrial-canvas';
 
 const IndustrialCanvas = dynamic(() => import('./industrial-canvas'), { ssr: false, loading: () => null });
+const assetCopy: Record<FocusedAsset, { label: string; detail: string }> = {
+  barrel: { label: 'Beer barrel', detail: 'Beer is consumed when selling goods and connecting industries.' },
+  coal: { label: 'Coal', detail: 'Coal travels from the mine to the city’s workshops and industries.' },
+  iron: { label: 'Iron ingots', detail: 'Iron is used to develop industries and construct buildings.' },
+};
 
 class SceneBoundary extends Component<{ children: ReactNode; onFailure: () => void }, { failed: boolean }> {
   state = { failed: false };
@@ -25,6 +31,7 @@ export function IndustrialHero({ completed = false }: { completed?: boolean }) {
   const [visible, setVisible] = useState(false);
   const [foreground, setForeground] = useState(true);
   const [mobile, setMobile] = useState(true);
+  const [focus, setFocus] = useState<FocusedAsset>('barrel');
 
   useEffect(() => {
     // Probe before importing/mounting Fiber, including browsers with WebGL disabled.
@@ -59,7 +66,7 @@ export function IndustrialHero({ completed = false }: { completed?: boolean }) {
       {available && enabled && !failed && (
         <div className={styles.canvas} aria-hidden="true">
           <SceneBoundary onFailure={() => setFailed(true)}>
-            <IndustrialCanvas running={running} mobile={mobile} onReady={() => setReady(true)} onFailure={() => setFailed(true)} />
+            <IndustrialCanvas running={running} mobile={mobile} focus={focus} onReady={() => setReady(true)} onFailure={() => setFailed(true)} />
           </SceneBoundary>
         </div>
       )}
@@ -69,9 +76,15 @@ export function IndustrialHero({ completed = false }: { completed?: boolean }) {
         <p className={styles.headline}>Industry.<br />Rivalry. <em>Legacy.</em></p>
         <p className={styles.caption}>{completed ? 'The ledger is closed. The legacy remains.' : 'Three industrialists. Ten matches. One enduring record.'}</p>
       </div>
-      <div className={styles.controls}>
-        {available && !failed && <button type="button" aria-pressed={enabled} onClick={() => setEnabled(!enabled)}>{enabled ? 'Disable 3D' : 'Enable 3D'}</button>}
-        {available && enabled && !failed && !reduced && <button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume motion' : 'Pause motion'}</button>}
+      <div className={styles.discovery}>
+        <div className={styles.assetButtons} aria-label="Explore game resources">
+          {(Object.keys(assetCopy) as FocusedAsset[]).map((asset) => <button key={asset} type="button" aria-pressed={focus === asset} onClick={() => setFocus(asset)}>{asset === 'barrel' ? 'Barrel' : asset === 'coal' ? 'Coal' : 'Iron'}</button>)}
+        </div>
+        <p className={styles.assetDetail} aria-live="polite"><strong>{assetCopy[focus].label}</strong><span>{assetCopy[focus].detail}</span></p>
+        <div className={styles.motionControls}>
+          {available && !failed && <button type="button" aria-pressed={enabled} onClick={() => setEnabled(!enabled)}>{enabled ? 'Disable 3D' : 'Enable 3D'}</button>}
+          {available && enabled && !failed && !reduced && <button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume motion' : 'Pause motion'}</button>}
+        </div>
       </div>
     </section>
   );

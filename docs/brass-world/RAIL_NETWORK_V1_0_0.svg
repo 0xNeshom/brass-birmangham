@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="940" viewBox="0 0 1500 940">
+<rect width="100%" height="100%" fill="#f6f1e4"/>
+<text x="55" y="48" font-family="serif" font-size="30" fill="#332d25">Calder Marches · Railway topology</text>
+<text x="55" y="77" font-family="sans-serif" font-size="15" fill="#5a5349">Three registered railway corridors; overpasses and transfers are separate records</text>
+<rect x="55" y="110" width="860" height="570" fill="#e8e1d0" stroke="#81745f"/>
+<polyline points="289.1,437.8 367.9,404.5 432.4,397.4 480.2,418.8" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-basin-trunk-01: node-junction-rail-westford to node-junction-rail-ironhaven</title>
+<circle cx="432.4" cy="397.4" r="2.4" fill="#956144"/>
+<polyline points="480.2,418.8 532.8,395.0 580.6,376.0 642.7,368.9" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-basin-trunk-02: node-junction-rail-ironhaven to node-rail-station-copperfield</title>
+<circle cx="580.6" cy="376.0" r="2.4" fill="#956144"/>
+<polyline points="642.7,368.9 676.1,409.2 714.3,482.9 750.2,459.1" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-basin-trunk-03: node-rail-station-copperfield to node-rail-station-greyhaven</title>
+<circle cx="714.3" cy="482.9" r="2.4" fill="#956144"/>
+<polyline points="750.2,459.1 795.6,485.2 848.1,497.1" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-basin-trunk-04: node-rail-station-greyhaven to node-rail-station-rivermouth</title>
+<circle cx="795.6" cy="485.2" r="2.4" fill="#956144"/>
+<polyline points="222.2,243.0 303.4,221.6 399.0,209.8" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-coal-feeder-01: node-rail-station-brackenford to node-rail-station-blackridge</title>
+<circle cx="303.4" cy="221.6" r="2.4" fill="#956144"/>
+<polyline points="399.0,209.8 415.7,262.0 437.2,304.8" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-coal-feeder-02: node-rail-station-blackridge to node-rail-station-calderwick</title>
+<circle cx="415.7" cy="262.0" r="2.4" fill="#956144"/>
+<polyline points="437.2,304.8 418.1,333.3 451.6,361.8 485.0,380.8 480.2,418.8" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-coal-feeder-03: node-rail-station-calderwick to node-junction-rail-ironhaven</title>
+<circle cx="451.6" cy="361.8" r="2.4" fill="#956144"/>
+<polyline points="289.1,437.8 246.1,499.5 255.7,542.2 270.0,573.1" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-southern-arc-01: node-junction-rail-westford to node-rail-station-dunmere</title>
+<circle cx="255.7" cy="542.2" r="2.4" fill="#956144"/>
+<polyline points="270.0,573.1 365.6,623.0 451.6,599.2" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-southern-arc-02: node-rail-station-dunmere to node-rail-station-ashbourne</title>
+<circle cx="365.6" cy="623.0" r="2.4" fill="#956144"/>
+<polyline points="451.6,599.2 556.7,532.8" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-southern-arc-03: node-rail-station-ashbourne to node-rail-station-foundry-vale</title>
+<circle cx="556.7" cy="532.8" r="2.4" fill="#956144"/>
+<polyline points="556.7,532.8 499.3,485.2 480.2,418.8" fill="none" stroke="#956144" stroke-width="3"/>
+<title>rail-southern-arc-04: node-rail-station-foundry-vale to node-junction-rail-ironhaven</title>
+<circle cx="499.3" cy="485.2" r="2.4" fill="#956144"/>
+<circle cx="289.1" cy="437.8" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-junction-rail-westford (rail-junction)</title></circle>
+<circle cx="451.6" cy="599.2" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-ashbourne (rail-station)</title></circle>
+<circle cx="848.1" cy="497.1" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-rivermouth (rail-station)</title></circle>
+<circle cx="222.2" cy="243.0" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-brackenford (rail-station)</title></circle>
+<circle cx="480.2" cy="418.8" r="5" fill="#fffaf0" stroke="#302b24" stroke-width="1.5"><title>node-junction-rail-ironhaven (rail-junction)</title></circle>
+<circle cx="399.0" cy="209.8" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-blackridge (rail-station)</title></circle>
+<circle cx="270.0" cy="573.1" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-dunmere (rail-station)</title></circle>
+<circle cx="437.2" cy="304.8" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-calderwick (rail-station)</title></circle>
+<circle cx="642.7" cy="368.9" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-copperfield (rail-station)</title></circle>
+<circle cx="750.2" cy="459.1" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-greyhaven (rail-station)</title></circle>
+<circle cx="556.7" cy="532.8" r="5" fill="#4d4032" stroke="#302b24" stroke-width="1.5"><title>node-rail-station-foundry-vale (rail-station)</title></circle>
+<text x="965" y="115" font-family="serif" font-size="21" fill="#332d25">Corridors and ordered segments</text>
+<text x="965" y="148" font-family="sans-serif" font-size="16" font-weight="bold" fill="#956144">rail-basin-trunk · rail</text>
+<text x="977" y="170" font-family="monospace" font-size="11.5" fill="#352f28">rail-basin-trunk-01: node-junction-rail-westford → node-junction-rail-ironhaven</text>
+<text x="977" y="186" font-family="monospace" font-size="11.5" fill="#352f28">rail-basin-trunk-02: node-junction-rail-ironhaven → node-rail-station-copperfield</text>
+<text x="977" y="202" font-family="monospace" font-size="11.5" fill="#352f28">rail-basin-trunk-03: node-rail-station-copperfield → node-rail-station-greyhaven</text>
+<text x="977" y="218" font-family="monospace" font-size="11.5" fill="#352f28">rail-basin-trunk-04: node-rail-station-greyhaven → node-rail-station-rivermouth</text>
+<text x="965" y="242" font-family="sans-serif" font-size="16" font-weight="bold" fill="#956144">rail-coal-feeder · rail</text>
+<text x="977" y="264" font-family="monospace" font-size="11.5" fill="#352f28">rail-coal-feeder-01: node-rail-station-brackenford → node-rail-station-blackridge</text>
+<text x="977" y="280" font-family="monospace" font-size="11.5" fill="#352f28">rail-coal-feeder-02: node-rail-station-blackridge → node-rail-station-calderwick</text>
+<text x="977" y="296" font-family="monospace" font-size="11.5" fill="#352f28">rail-coal-feeder-03: node-rail-station-calderwick → node-junction-rail-ironhaven</text>
+<text x="965" y="320" font-family="sans-serif" font-size="16" font-weight="bold" fill="#956144">rail-southern-arc · rail</text>
+<text x="977" y="342" font-family="monospace" font-size="11.5" fill="#352f28">rail-southern-arc-01: node-junction-rail-westford → node-rail-station-dunmere</text>
+<text x="977" y="358" font-family="monospace" font-size="11.5" fill="#352f28">rail-southern-arc-02: node-rail-station-dunmere → node-rail-station-ashbourne</text>
+<text x="977" y="374" font-family="monospace" font-size="11.5" fill="#352f28">rail-southern-arc-03: node-rail-station-ashbourne → node-rail-station-foundry-vale</text>
+<text x="977" y="390" font-family="monospace" font-size="11.5" fill="#352f28">rail-southern-arc-04: node-rail-station-foundry-vale → node-junction-rail-ironhaven</text>
+<text x="965" y="845" font-family="sans-serif" font-size="13" fill="#5a5349">Crossings remain grade-separated: physical spans create no transfer edges.</text>
+<text x="55" y="715" font-family="sans-serif" font-size="13" fill="#51493e">Map positions use the canonical normalized 3:2 board frame. Lines show only registered segments.</text>
+<text x="55" y="745" font-family="sans-serif" font-size="14" fill="#51493e">Frozen baseline: calder-marches-geography-v1.0.0 · north up · Day/Night share identical geometry</text>
+</svg>

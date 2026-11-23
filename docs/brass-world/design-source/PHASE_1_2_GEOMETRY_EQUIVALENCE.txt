@@ -1,0 +1,3 @@
+Day and Night use the same GEOGRAPHY object in render_phase_1_2.py.
+Illustration geometry SHA-256 eb5b624f5aab67d9238100d49331c274d1ba5b075f9a5ccb86f05ed7af9acf9e
+Provisional review positions only. Fonts DejaVu Serif and Sans review substitutes.
